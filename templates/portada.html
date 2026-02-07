@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% block title %}ArqueoTrack - Sistema de Gestión Arqueológica{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="hero">
+        <h1>ArqueoTrack</h1>
+        <p>Sistema profesional de gestión y seguimiento de yacimientos arqueológicos</p>
+        <div class="hero-actions" style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="/registro" class="btn" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                Comenzar Ahora
+            </a>
+            <a href="/iniciar-sesion" class="btn btn-secondary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                Iniciar Sesión
+            </a>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 2rem;">
+        <h2>¿Qué es ArqueoTrack?</h2>
+        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--dark-secondary); margin-bottom: 1.5rem;">
+            ArqueoTrack es una plataforma digital diseñada específicamente para equipos de excavación que necesitan 
+            documentar, organizar y gestionar yacimientos arqueológicos de manera profesional y eficiente.
+        </p>
+        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--dark-secondary); margin-bottom: 1.5rem;">
+            Con nuestra herramienta, podrás registrar información detallada de cada yacimiento, incluyendo su ubicación 
+            geográfica precisa mediante coordenadas GPS, documentar todos los hallazgos encontrados con fotografías y 
+            descripciones completas, y mantener un control exhaustivo del proceso de excavación desde el inicio hasta 
+            su finalización.
+        </p>
+        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--dark-secondary);">
+            Cada hallazgo recibe un código único de identificación, lo que permite una búsqueda rápida y un sistema de 
+            catalogación ordenado. Además, los equipos pueden colaborar mediante comentarios en tiempo real sobre cada 
+            descubrimiento, facilitando la comunicación y el trabajo conjunto.
+        </p>
+    </div>
+    <div class="card" style="margin-top: 2rem;">
+        <h2>Funcionalidades Principales</h2>
+        <div class="features" style="margin-top: 1.5rem;">
+            <div class="feature-card">
+                <h3>Mapas Interactivos</h3>
+                <p>
+                    Registra la ubicación exacta de tus yacimientos y hallazgos mediante coordenadas GPS. 
+                    Visualiza todos tus sitios en mapas interactivos con tecnología Leaflet.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Documentación Visual</h3>
+                <p>
+                    Adjunta fotografías de alta calidad a cada hallazgo. Incluye descripciones detalladas, 
+                    notas de campo, estado de conservación y toda la información relevante.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Búsqueda por Código</h3>
+                <p>
+                    Cada hallazgo recibe un código único alfanumérico. Encuentra cualquier pieza en segundos 
+                    introduciendo su código de acceso en el sistema de búsqueda rápida.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Gestión de Fases</h3>
+                <p>
+                    Organiza tu proyecto en fases (valoración, excavación, análisis, conservación). 
+                    Controla estados, fechas y responsables de cada etapa.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Sectores y Cuadrículas</h3>
+                <p>
+                    Divide tu yacimiento en sectores o cuadrículas. Asigna hallazgos a ubicaciones 
+                    específicas para un mejor control espacial.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Línea de Tiempo</h3>
+                <p>
+                    Mantén un registro cronológico completo de todos los eventos: hallazgos, reuniones, 
+                    análisis, decisiones y cambios de estado.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Colaboración en Equipo</h3>
+                <p>
+                    Invita a miembros del equipo con diferentes roles. Permite comentarios, observaciones 
+                    y mantén un historial completo de todas las discusiones.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Estadísticas y Reportes</h3>
+                <p>
+                    Visualiza estadísticas en tiempo real: total de hallazgos, estado de conservación, 
+                    distribución por tipos y sectores.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Informes Profesionales en PDF</h3>
+                <p>
+                    Genera informes completos y profesionales en formato PDF al finalizar excavaciones. 
+                    Incluye catálogo de hallazgos, fases del proyecto, estadísticas y conclusiones.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="card" style="margin-top: 2rem;">
+        <h2>Cómo Funciona</h2>
+        <div style="display: grid; gap: 2rem; margin-top: 1.5rem;">
+            <div style="display: flex; gap: 1.5rem; align-items: start;">
+                <div style="min-width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold;">1</div>
+                <div>
+                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Registra tu Yacimiento</h3>
+                    <p style="color: var(--dark-secondary); line-height: 1.7;">
+                        Crea un nuevo yacimiento especificando su nombre, ubicación geográfica, responsable del 
+                        proyecto, y fechas. El sistema te permite marcar la ubicación exacta en un mapa interactivo.
+                    </p>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1.5rem; align-items: start;">
+                <div style="min-width: 60px; height: 60px; background: linear-gradient(135deg, var(--secondary-color), #7c3aed); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold;">2</div>
+                <div>
+                    <h3 style="color: var(--secondary-color); margin-bottom: 0.5rem;">Organiza en Fases y Sectores</h3>
+                    <p style="color: var(--dark-secondary); line-height: 1.7;">
+                        Planifica las fases del proyecto arqueológico y divide el yacimiento en sectores. 
+                        Esto te permitirá un control exhaustivo del progreso y la distribución espacial.
+                    </p>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1.5rem; align-items: start;">
+                <div style="min-width: 60px; height: 60px; background: linear-gradient(135deg, var(--success-color), #059669); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold;">3</div>
+                <div>
+                    <h3 style="color: var(--success-color); margin-bottom: 0.5rem;">Documenta los Hallazgos</h3>
+                    <p style="color: var(--dark-secondary); line-height: 1.7;">
+                        Por cada pieza encontrada, registra tipo, descripción, estado de conservación, fotografías, 
+                        ubicación GPS, sector asignado, y mucho más. Cada hallazgo recibe un código único.
+                    </p>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1.5rem; align-items: start;">
+                <div style="min-width: 60px; height: 60px; background: linear-gradient(135deg, var(--info-color), #2563eb); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold;">4</div>
+                <div>
+                    <h3 style="color: var(--info-color); margin-bottom: 0.5rem;">Colabora con tu Equipo</h3>
+                    <p style="color: var(--dark-secondary); line-height: 1.7;">
+                        Invita a miembros del equipo con diferentes roles (visualizador, editor, colaborador). 
+                        Todos pueden comentar, registrar eventos y mantener una comunicación fluida.
+                    </p>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1.5rem; align-items: start;">
+                <div style="min-width: 60px; height: 60px; background: linear-gradient(135deg, var(--warning-color), #f59e0b); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold;">5</div>
+                <div>
+                    <h3 style="color: var(--warning-color); margin-bottom: 0.5rem;">Analiza y Reporta</h3>
+                    <p style="color: var(--dark-secondary); line-height: 1.7;">
+                        Consulta estadísticas, visualiza líneas de tiempo, genera reportes y mantén un 
+                        control completo del progreso del proyecto desde inicio hasta cierre.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 2rem; text-align: center; background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));">
+        <h2 style="border-bottom: none;">¿Listo para transformar tu gestión arqueológica?</h2>
+        <p style="font-size: 1.1rem; color: var(--gray); margin: 1rem auto 2rem; max-width: 600px;">
+            Únete a ArqueoTrack hoy y lleva tu documentación arqueológica al siguiente nivel. 
+            El registro es gratuito y podrás comenzar en minutos.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="/registro" class="btn" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
+                Registrarse Gratis
+            </a>
+            <a href="/iniciar-sesion" class="btn btn-secondary" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
+                Ya tengo cuenta
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

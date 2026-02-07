@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Editar Fase - ArqueoTrack{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="form-container">
+        <h1>Editar Fase del Proyecto</h1>
+        <p style="color: var(--gray);">
+            Yacimiento: <strong style="color: var(--primary-color);">{{ fase.yacimiento.nombre }}</strong>
+        </p>
+
+        <form method="POST">
+            {{ formulario.hidden_tag() }}
+
+            <div class="form-group">
+                <label for="nombre">Nombre de la Fase *</label>
+                {{ formulario.nombre(class="form-control", id="nombre") }}
+            </div>
+
+            <div class="form-group">
+                <label for="descripcion">Descripción de la Fase</label>
+                {{ formulario.descripcion(class="form-control", id="descripcion", rows=4) }}
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div class="form-group">
+                    <label for="fecha_inicio">Fecha de Inicio</label>
+                    {{ formulario.fecha_inicio(class="form-control", id="fecha_inicio") }}
+                </div>
+
+                <div class="form-group">
+                    <label for="fecha_fin">Fecha de Fin</label>
+                    {{ formulario.fecha_fin(class="form-control", id="fecha_fin") }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="estado">Estado</label>
+                {{ formulario.estado(class="form-control", id="estado") }}
+            </div>
+
+            <div class="form-group">
+                <label for="notas">Notas</label>
+                {{ formulario.notas(class="form-control", id="notas", rows=3) }}
+            </div>
+
+            <div style="margin-top: 2rem; padding: 1.5rem; background: var(--light-gray); border-radius: var(--border-radius);">
+                <h3 style="margin-bottom: 1rem;">Información de la Fase</h3>
+                <div class="detail-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; font-size: var(--font-sm);">
+                    <div><strong>Orden:</strong> {{ fase.orden }}</div>
+                    <div><strong>Responsable:</strong> {{ fase.responsable.nombre_usuario if fase.responsable else 'No asignado' }}</div>
+                </div>
+            </div>
+
+            <div class="button-group" style="margin-top: 2rem;">
+                <button type="submit" class="btn">Guardar Cambios</button>
+                <a href="/yacimiento/{{ fase.yacimiento_id }}/fases" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

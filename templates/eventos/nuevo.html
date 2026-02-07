@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Nuevo Evento - {{ yacimiento.nombre }}{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="form-container">
+        <h1>Registrar Nuevo Evento</h1>
+        <p style="color: var(--primary-color); font-weight: 600;">{{ yacimiento.nombre }}</p>
+
+        <form method="POST">
+            {{ formulario.hidden_tag() }}
+
+            <div class="form-group">
+                <label for="tipo">Tipo de Evento *</label>
+                {{ formulario.tipo(class="form-control", id="tipo") }}
+            </div>
+
+            <div class="form-group">
+                <label for="titulo">Título del Evento *</label>
+                {{ formulario.titulo(class="form-control", id="titulo", autofocus=true) }}
+                <small style="color: var(--gray); font-size: var(--font-sm);">
+                    Un título descriptivo y conciso
+                </small>
+                {% if formulario.titulo.errors %}
+                    {% for error in formulario.titulo.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="descripcion">Descripción Detallada *</label>
+                {{ formulario.descripcion(class="form-control", id="descripcion", rows=4) }}
+                <small style="color: var(--gray); font-size: var(--font-sm);">
+                    Describe el evento con el mayor detalle posible
+                </small>
+                {% if formulario.descripcion.errors %}
+                    {% for error in formulario.descripcion.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="fecha">Fecha y Hora del Evento *</label>
+                {{ formulario.fecha(class="form-control", id="fecha", type="datetime-local") }}
+                {% if formulario.fecha.errors %}
+                    {% for error in formulario.fecha.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div style="margin-top: 2rem; padding: 1.5rem; background: var(--light-gray); border-radius: var(--border-radius); border-left: 4px solid var(--info-color);">
+                <h3 style="color: var(--info-color); margin-bottom: 1rem;">Relacionar con elementos del proyecto (opcional)</h3>
+
+                <div class="form-group">
+                    <label for="fase_id">Fase Relacionada</label>
+                    {{ formulario.fase_id(class="form-control", id="fase_id") }}
+                </div>
+
+                <div class="form-group">
+                    <label for="hallazgo_id">Hallazgo Relacionado</label>
+                    {{ formulario.hallazgo_id(class="form-control", id="hallazgo_id") }}
+                </div>
+
+                <div class="form-group">
+                    <label for="sector_id">Sector Relacionado</label>
+                    {{ formulario.sector_id(class="form-control", id="sector_id") }}
+                </div>
+            </div>
+
+            <div class="button-group" style="margin-top: 2rem;"><button type="submit" class="btn btn-success">Registrar Evento</button>
+                                <a href="/yacimiento/{{ yacimiento.id }}/timeline" class="btn btn-secondary">Cancelar</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {% endblock %}

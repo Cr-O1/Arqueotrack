@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}Registro - ArqueoTrack{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="form-container">
+        <h1>Crear Cuenta</h1>
+        <p>Regístrate para comenzar a gestionar tus yacimientos arqueológicos de forma profesional</p>
+
+        <form method="POST" novalidate>
+            {{ formulario.hidden_tag() }}
+
+            <div class="form-group">
+                <label for="nombre">Nombre *</label>
+                {{ formulario.nombre(class="form-control", id="nombre", autocomplete="given-name", autofocus=true) }}
+                {% if formulario.nombre.errors %}
+                    {% for error in formulario.nombre.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="apellidos">Apellidos *</label>
+                {{ formulario.apellidos(class="form-control", id="apellidos", autocomplete="family-name") }}
+                {% if formulario.apellidos.errors %}
+                    {% for error in formulario.apellidos.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="nombre_usuario">Nombre de Usuario *</label>
+                {{ formulario.nombre_usuario(class="form-control", id="nombre_usuario", autocomplete="username") }}
+                <small style="color: var(--gray); font-size: var(--font-sm);">
+                    Mínimo 4 caracteres, máximo 20
+                </small>
+                {% if formulario.nombre_usuario.errors %}
+                    {% for error in formulario.nombre_usuario.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="correo_electronico">Correo Electrónico *</label>
+                {{ formulario.correo_electronico(class="form-control", type="email", id="correo_electronico", autocomplete="email") }}
+                {% if formulario.correo_electronico.errors %}
+                    {% for error in formulario.correo_electronico.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="fecha_nacimiento">Fecha de Nacimiento *</label>
+                {{ formulario.fecha_nacimiento(class="form-control", id="fecha_nacimiento") }}
+                {% if formulario.fecha_nacimiento.errors %}
+                    {% for error in formulario.fecha_nacimiento.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="ocupacion">Ocupación *</label>
+                {{ formulario.ocupacion(class="form-control", id="ocupacion") }}
+                {% if formulario.ocupacion.errors %}
+                    {% for error in formulario.ocupacion.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="contraseña">Contraseña *</label>
+                {{ formulario.contraseña(class="form-control", id="contraseña", autocomplete="new-password") }}
+                <small style="color: var(--gray); font-size: var(--font-sm);">
+                    Mínimo 10 caracteres para mayor seguridad
+                </small>
+                {% if formulario.contraseña.errors %}
+                    {% for error in formulario.contraseña.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">
+                {{ formulario.enviar.label.text }}
+            </button>
+        </form>
+
+        <p style="margin-top: 1.5rem; text-align: center; color: var(--gray);">
+            ¿Ya tienes cuenta? 
+            <a href="/iniciar-sesion" style="color: var(--primary-color); font-weight: 600; text-decoration: none;">
+                Inicia sesión aquí
+            </a>
+        </p>
+    </div>
+</div>
+{% endblock %}

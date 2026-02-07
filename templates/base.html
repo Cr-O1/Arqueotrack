@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ArqueoTrack - Sistema profesional de gestión arqueológica para documentar yacimientos y hallazgos">
+    <meta name="keywords" content="arqueología, gestión, yacimientos, hallazgos, excavación">
+    <meta name="author" content="ArqueoTrack">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>{% block title %}ArqueoTrack{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="{% if current_user.is_authenticated %}/inicio{% else %}/{% endif %}">
+                    ArqueoTrack
+                </a>
+            </div>
+
+            <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-menu">
+                {% block nav_links %}
+                {% if current_user.is_authenticated %}
+                    <li><a href="/inicio" class="nav-link">Inicio</a></li>
+                    <li><a href="/nuevo_yacimiento" class="nav-link">Nuevo Yacimiento</a></li>
+                    <li><a href="/buscar-codigo" class="nav-link">Buscar Código</a></li>
+                    <li><a href="/mis-invitaciones" class="nav-link">Invitaciones</a></li>
+                    <li><a href="/perfil" class="nav-link">Mi Perfil</a></li>
+                    <li><a href="/cerrar-sesion" class="nav-link btn-nav-primary">Cerrar Sesión</a></li>
+                {% else %}
+                    <li><a href="/" class="nav-link">Inicio</a></li>
+                    <li><a href="/iniciar-sesion" class="nav-link">Iniciar Sesión</a></li>
+                    <li><a href="/registro" class="nav-link btn-nav-primary">Registrarse</a></li>
+                {% endif %}
+                {% endblock %}
+            </ul>
+        </div>
+    </nav>
+    <div role="alert" aria-live="polite" class="alert-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="footer">
+        <div class="footer-content" style="text-align: center; padding: 1rem; margin-top: 1rem;">
+            <p style="margin: 0; font-size: 0.9rem;">Arqueotrack 2025 - Hecho por Costa Adeje Bots Yellow</p>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
