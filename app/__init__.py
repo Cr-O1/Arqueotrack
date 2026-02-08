@@ -13,8 +13,13 @@ csrf = CSRFProtect()
 
 
 def create_app(config_name='development'):
-    
-    app = Flask(__name__)
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    app = Flask(
+        __name__,
+        template_folder=os.path.join(project_root, 'templates'),
+        static_folder=os.path.join(project_root, 'static')
+    )
 
     # Cargar configuración
     from config import get_config
@@ -75,17 +80,17 @@ def create_app(config_name='development'):
     @app.errorhandler(404)
     def not_found(error):
         from flask import render_template
-        return render_template('errors/404.html'), 404
+        return render_template('errores/404.html'), 404
 
     @app.errorhandler(403)
     def forbidden(error):
         from flask import render_template
-        return render_template('errors/403.html'), 403
+        return render_template('errores/403.html'), 403
 
     @app.errorhandler(500)
     def internal_error(error):
         db.session.rollback()
         from flask import render_template
-        return render_template('errors/500.html'), 500
+        return render_template('errores/500.html'), 500
 
     return app
