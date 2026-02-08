@@ -36,11 +36,8 @@ def registro():
             db.session.rollback()
             flash(f'Error al registrar: {str(e)}', 'error')
     else:
-        if request.method == 'POST':
-            # print(f"DEBUG: Form validation failed. Errors: {form.errors}")
-            for field, errors in form.errors.items():
-                for error in errors:
-                    flash(f"Error en {getattr(form, field).label.text}: {error}", 'error')
+        # print(f"DEBUG: Form validation failed. Errors: {form.errors}")
+        pass
     return render_template('registro.html', formulario=form)
 
 @auth_bp.route('/iniciar-sesion', methods=['GET', 'POST'])
