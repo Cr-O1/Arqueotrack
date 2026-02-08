@@ -16,6 +16,7 @@ def registro():
 
     form = RegistroForm()
     if form.validate_on_submit():
+        print("DEBUG: Form validated successfully")
         try:
             nuevo_usuario = Usuario(
                 nombre_usuario=form.nombre_usuario.data,
@@ -31,8 +32,15 @@ def registro():
             flash('¡Cuenta creada exitosamente! Por favor inicia sesión.', 'success')
             return redirect(url_for('auth.iniciar_sesion'))
         except Exception as e:
+            print(f"DEBUG: Exception during registration: {e}")
             db.session.rollback()
             flash(f'Error al registrar: {str(e)}', 'error')
+    else:
+        if request.method == 'POST':
+            # print(f"DEBUG: Form validation failed. Errors: {form.errors}")
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash(f"Error en {getattr(form, field).label.text}: {error}", 'error')
     return render_template('registro.html', formulario=form)
 
 @auth_bp.route('/iniciar-sesion', methods=['GET', 'POST'])

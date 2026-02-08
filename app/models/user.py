@@ -16,7 +16,7 @@ class Usuario(db.Model, UserMixin):
     nombre = db.Column(db.String(100), nullable=False)
     apellidos = db.Column(db.String(100), nullable=False)
     fecha_nacimiento = db.Column(db.Date, nullable=False)
-    ocupacion = db.Column(db.String(50))
+    ocupacion = db.Column(db.String(50), nullable=True)
 
     # Metadata
     fecha_registro = db.Column(db.DateTime, default=datetime.utcnow)

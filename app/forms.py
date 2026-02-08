@@ -4,7 +4,7 @@ from wtforms.validators import InputRequired, Length, Email, EqualTo, Validation
 from app.models.user import Usuario
 
 class RegistroForm(FlaskForm):
-    nombre_usuario = StringField('Nombre de Usuario', validators=[InputRequired(), Length(min=4, max=80)])
+    nombre_usuario = StringField('Nombre de Usuario', validators=[InputRequired(), Length(min=4, max=20)])
     nombre = StringField('Nombre', validators=[InputRequired(), Length(max=100)])
     apellidos = StringField('Apellidos', validators=[InputRequired(), Length(max=100)])
     correo_electronico = StringField('Correo Electrónico', validators=[InputRequired(), Email(), Length(max=120)])
