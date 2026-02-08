@@ -7,9 +7,6 @@ from app.utils import generar_codigo_unico, allowed_file, is_safe_url, time_ago
 from werkzeug.utils import secure_filename
 import os
 import json
-from geoalchemy2.shape import to_shape
-from shapely.geometry import mapping
-
 yacimiento_bp = Blueprint('yacimiento', __name__)
 
 @yacimiento_bp.route('/nuevo_yacimiento', methods=['GET', 'POST'])
