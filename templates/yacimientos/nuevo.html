@@ -129,8 +129,8 @@
 
                 {{ formulario.lat(type="hidden", id="lat") }}
                 {{ formulario.lng(type="hidden", id="lng") }}
-                <input type="hidden" id="polygon_geojson" name="polygon_geojson">
-                <input type="hidden" id="area_m2" name="area_m2">
+                {{ formulario.polygon_geojson(type="hidden", id="polygon_geojson") }}
+                {{ formulario.area(type="hidden", id="area_m2") }}
 
                 <p id="coords-display" style="margin-top: 0.5rem; color: var(--gray); font-size: var(--font-sm); font-family: monospace;"></p>
                 <div id="area-display"></div>

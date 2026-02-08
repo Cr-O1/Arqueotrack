@@ -24,7 +24,11 @@ def nuevo_yacimiento():
                 lat=form.lat.data,
                 lng=form.lng.data,
                 polygon_geojson=form.polygon_geojson.data,
-                area_m2=form.area.data
+                area_m2=form.area.data,
+                responsable=form.responsable.data,
+                fecha_inicio=form.fecha_inicio.data,
+                fecha_fin=form.fecha_fin.data,
+                altitud_media=form.altitud_media.data
             )
             db.session.add(yacimiento)
             db.session.commit()
@@ -115,6 +119,10 @@ def editar(yacimiento_id):
             yacimiento.lng = form.lng.data
             yacimiento.polygon_geojson = form.polygon_geojson.data
             yacimiento.area_m2 = form.area.data
+            yacimiento.responsable = form.responsable.data
+            yacimiento.fecha_inicio = form.fecha_inicio.data
+            yacimiento.fecha_fin = form.fecha_fin.data
+            yacimiento.altitud_media = form.altitud_media.data
             db.session.commit()
             flash('Yacimiento actualizado.', 'success')
             return redirect(url_for('yacimiento.detalle', yacimiento_id=yacimiento.id))
