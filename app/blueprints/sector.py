@@ -40,7 +40,7 @@ def nuevo_sector(yacimiento_id):
         except:
             db.session.rollback()
             flash('Error al crear.', 'error')
-    return render_template('sectores/nuevo.html', form=form, yacimiento=yacimiento)
+    return render_template('sectores/nuevo.html', formulario=form, yacimiento=yacimiento)
 
 @sector_bp.route('/yacimiento/<int:yacimiento_id>/sectores')
 @login_required
@@ -143,7 +143,7 @@ def editar(sector_id):
         except:
             db.session.rollback()
             flash('Error al actualizar.', 'error')
-    return render_template('sectores/editar.html', form=form, sector=sector)
+    return render_template('sectores/editar.html', formulario=form, sector=sector)
 
 @sector_bp.route('/eliminar_sector/<int:sector_id>', methods=['POST'])
 @login_required
