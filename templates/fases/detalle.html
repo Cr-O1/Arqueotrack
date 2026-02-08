@@ -17,9 +17,9 @@
                 </p>
             </div>
             <div class="button-group" style="margin: 0;">
-                <a href="/fase/{{ fase.id }}/editar" class="btn">Editar</a>
+                <a href="/editar_fase/{{ fase.id }}" class="btn">Editar</a>
                 <a href="/yacimiento/{{ fase.yacimiento_id }}/fases" class="btn btn-secondary">Volver a Fases</a>
-                <form method="POST" action="/fase/{{ fase.id }}/eliminar" style="display: inline;" onsubmit="return confirm('¿Estás seguro de eliminar esta fase?');">
+                <form method="POST" action="/eliminar_fase/{{ fase.id }}" style="display: inline;" onsubmit="return confirm('¿Estás seguro de eliminar esta fase?');">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <button type="submit" class="btn btn-danger">Eliminar Fase</button>
         </form>

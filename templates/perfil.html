@@ -63,7 +63,7 @@
         </div>
         <div class="button-group" style="margin-top: 2rem;">
             <a href="/inicio" class="btn">← Volver al Dashboard</a>
-            <form action="{{ url_for('eliminar_cuenta') }}" method="post" style="display:inline;" onsubmit="return confirm('⚠️ ¿Estás seguro de eliminar tu cuenta?\n\nEsta acción eliminará:\n- Todos tus yacimientos\n- Todos tus hallazgos\n- Todos tus comentarios\n\nEsta acción NO se puede deshacer.')">
+            <form action="{{ url_for('main.eliminar_cuenta') }}" method="post" style="display:inline;" onsubmit="return confirm('⚠️ ¿Estás seguro de eliminar tu cuenta?\n\nEsta acción eliminará:\n- Todos tus yacimientos\n- Todos tus hallazgos\n- Todos tus comentarios\n\nEsta acción NO se puede deshacer.')">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <button type="submit" class="btn btn-danger">Eliminar mi cuenta</button>
             </form>

@@ -32,13 +32,13 @@
                         </div>
 
                         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                            <form method="POST" action="/invitacion/{{ invitacion.id }}/aceptar" style="display: inline;">
+                            <form method="POST" action="/aceptar_invitacion/{{ invitacion.id }}" style="display: inline;">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                 <button type="submit" class="btn btn-success">
                                     Aceptar
                                 </button>
                             </form>
-                            <form method="POST" action="/invitacion/{{ invitacion.id }}/rechazar" style="display: inline;">
+                            <form method="POST" action="/rechazar_invitacion/{{ invitacion.id }}" style="display: inline;">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                 <button type="submit" class="btn btn-danger">
                                     Rechazar
