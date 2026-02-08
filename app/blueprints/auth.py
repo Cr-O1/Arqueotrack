@@ -33,7 +33,7 @@ def registro():
         except Exception as e:
             db.session.rollback()
             flash(f'Error al registrar: {str(e)}', 'error')
-    return render_template('auth/registro.html', form=form)
+    return render_template('registro.html', formulario=form)
 
 @auth_bp.route('/iniciar-sesion', methods=['GET', 'POST'])
 def iniciar_sesion():
@@ -51,7 +51,7 @@ def iniciar_sesion():
                 return redirect(next_page)
             return redirect(url_for('main.inicio'))
         flash('Credenciales inválidas', 'error')
-    return render_template('auth/iniciar_sesion.html', form=form)
+    return render_template('iniciar_sesion.html', formulario=form)
 
 @auth_bp.route('/cerrar-sesion')
 @login_required
