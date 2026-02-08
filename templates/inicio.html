@@ -53,7 +53,7 @@
                     <div class="card-info">
                         <p><strong>Ubicación:</strong> {{ yacimiento.ubicacion or 'No especificada' }}</p>
                         <p><strong>Responsable:</strong> {{ yacimiento.responsable or 'No asignado' }}</p>
-                        <p><strong>Hallazgos:</strong> {{ yacimiento.hallazgos|length }}</p>
+                        <p><strong>Hallazgos:</strong> {{ yacimiento.total_hallazgos }}</p>
                         <p><strong>Estado:</strong>
                             {% if yacimiento.fecha_fin %}
                                 <span style="color: var(--success-color); font-weight: 600;">✓ Finalizado</span>
@@ -94,7 +94,7 @@
                 <div class="card-info">
                     <p><strong>Ubicación:</strong> {{ yacimiento.ubicacion or 'No especificada' }}</p>
                     <p><strong>Propietario:</strong> {{ yacimiento.propietario.nombre_usuario }}</p>
-                    <p><strong>Hallazgos:</strong> {{ yacimiento.hallazgos|length }}</p>
+                    <p><strong>Hallazgos:</strong> {{ yacimiento.total_hallazgos }}</p>
                     <p><strong>Estado:</strong>
                         {% if yacimiento.fecha_fin %}
                             <span style="color: var(--success-color); font-weight: 600;">✓ Finalizado</span>

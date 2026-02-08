@@ -147,7 +147,7 @@
 
     <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
-            <h2 style="margin: 0; border: none;">Hallazgos ({{ hallazgos|length }})</h2>
+            <h2 style="margin: 0; border: none;">Hallazgos ({{ total_hallazgos }})</h2>
             {% if puede_crear %}
                 <a href="/nuevo_hallazgo/{{ yacimiento.id }}" class="btn btn-success" style="margin: 0;">
                     âž• Registrar Hallazgo

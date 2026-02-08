@@ -60,7 +60,7 @@
 
             <div class="detail-item">
                 <strong>Hallazgos en este sector</strong><br>
-                <span style="color: var(--dark-secondary);">{{ sector.hallazgos|length }}</span>
+                <span style="color: var(--dark-secondary);">{{ sector.total_hallazgos }}</span>
             </div>
 
             <div class="detail-item">
@@ -90,7 +90,7 @@
 
     {% if sector.hallazgos %}
         <div class="card">
-            <h2 style="margin-bottom: 1.5rem; border: none;">Hallazgos en este Sector ({{ sector.hallazgos|length }})</h2>
+            <h2 style="margin-bottom: 1.5rem; border: none;">Hallazgos en este Sector ({{ sector.total_hallazgos }})</h2>
 
             <div class="yacimientos-grid">
                 {% for hallazgo in sector.hallazgos %}

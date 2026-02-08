@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, DateField, SelectField, TextAreaField, FloatField, DateTimeField, BooleanField, FileField
-from wtforms.validators import InputRequired, Length, Email, EqualTo, ValidationError, Optional
+from wtforms.validators import InputRequired, Length, Email, EqualTo, ValidationError, Optional, DataRequired
 from app.models.user import Usuario
 
 class RegistroForm(FlaskForm):
@@ -57,12 +57,17 @@ class HallazgoForm(FlaskForm):
     dimensiones = StringField('Dimensiones')
     peso = FloatField('Peso (g)', validators=[Optional()])
     estado_conservacion = SelectField('Estado Conservación', choices=[('bueno', 'Bueno'), ('regular', 'Regular'), ('malo', 'Malo')])
+    proceso_extraccion = TextAreaField('Proceso de Extracción', validators=[Optional()], render_kw={'rows': 4, 'placeholder': 'Describe el método de extracción...'})
+    destino = StringField('Destino/Repositorio',  validators=[Optional()], render_kw={'placeholder': 'Ej: Museo Arqueológico, Laboratorio...'})
     descripcion = TextAreaField('Descripción')
     lat = FloatField('Latitud', validators=[Optional()])
     lng = FloatField('Longitud', validators=[Optional()])
     fecha = DateField('Fecha Hallazgo', validators=[Optional()])
+    notas = TextAreaField('Notas', validators=[Optional()], render_kw={'rows': 3})
     sector_id = SelectField('Sector', coerce=int)
     foto = FileField('Foto')
+    ubicacion = StringField('Ubicación/Referencia', validators=[Optional(), Length(max=200)], render_kw={'placeholder': 'Ej: "Sector A, cuadrícula 5x10" o coordenadas'})
+    altitud = FloatField('Altitud (m s.n.m.)', validators=[Optional()], render_kw={'step': '0.1', 'placeholder': 'Ej: 650.5'})
     submit = SubmitField('Guardar')
 
 class SectorForm(FlaskForm):
@@ -81,6 +86,8 @@ class FaseForm(FlaskForm):
     estado = SelectField('Estado', choices=[('planificada', 'Planificada'), ('en_curso', 'En Curso'), ('finalizada', 'Finalizada')])
     fecha_inicio = DateField('Fecha Inicio', validators=[Optional()])
     fecha_fin = DateField('Fecha Fin', validators=[Optional()])
+    notas = TextAreaField('Notas', validators=[Optional()], render_kw={'rows': 3})
+
     submit = SubmitField('Guardar')
 
 class EventoForm(FlaskForm):
