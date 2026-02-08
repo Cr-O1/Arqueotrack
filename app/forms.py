@@ -37,7 +37,7 @@ class YacimientoForm(FlaskForm):
     lng = FloatField('Longitud', validators=[Optional()])
     polygon_geojson = TextAreaField('GeoJSON Polígono', validators=[Optional()])
     area = FloatField('Área (m²)', validators=[Optional()])
-    responsable = StringField('Responsable', validators=[...])
+    responsable = StringField('Responsable', validators=[Optional()])
     submit = SubmitField('Guardar')
 
 class EditarProcesoYacimientoForm(FlaskForm):
