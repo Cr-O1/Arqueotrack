@@ -13,10 +13,10 @@
             <h1>Sectores del Yacimiento ({{ sectores|length }})</h1>
             <div class="button-group" style="margin: 0;">
                 {% if puede_crear %}
-                    <a href="{{ url_for('nuevo_sector', yacimiento_id=yacimiento.id) }}" class="btn btn-success">➕ Nuevo Sector</a>
+                    <a href="{{ url_for('sector.nuevo_sector', yacimiento_id=yacimiento.id) }}" class="btn btn-success">➕ Nuevo Sector</a>
                 {% endif %}
                 {% if sectores %}
-                    <a href="{{ url_for('mapa_sectores', yacimiento_id=yacimiento.id) }}" class="btn btn-info">🗺️ Ver Mapa</a>
+                    <a href="{{ url_for('sector.mapa_sectores', yacimiento_id=yacimiento.id) }}" class="btn btn-info">🗺️ Ver Mapa</a>
                 {% endif %}
             </div>
         </div>
@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="stat-card" style="background: linear-gradient(135deg, var(--info-color), #2563eb);">
-                    <h3>{{ sectores|sum(attribute='hallazgos')|length if sectores else 0 }}</h3>
+                    <h3>{{ total_hallazgos }}</h3>
                     <p>Hallazgos Totales</p>
                 </div>
 
@@ -106,12 +106,12 @@
                         </div>
 
                         <div class="card-actions">
-                            <a href="{{ url_for('detalle_sector', sector_id=sector.id) }}" class="btn">Ver Detalles</a>
-                            {% if puede_editar %}
-                                <a href="{{ url_for('editar_sector', sector_id=sector.id) }}" class="btn btn-secondary">Editar</a>
+                            <a href="{{ url_for('sector.detalle', sector_id=sector.id) }}" class="btn">Ver Detalles</a>
+                            {% if puede_editar_sectores %}
+                                <a href="{{ url_for('sector.editar', sector_id=sector.id) }}" class="btn btn-secondary">Editar</a>
                             {% endif %}
-                            {% if puede_eliminar %}
-                                <form method="POST" action="{{ url_for('eliminar_sector', sector_id=sector.id) }}"
+                            {% if puede_eliminar_sectores %}
+                                <form method="POST" action="{{ url_for('sector.eliminar', sector_id=sector.id) }}"
                                       style="display: inline;" 
                                       onsubmit="return confirm('¿Eliminar sector \"{{ sector.nombre }}\"? Los hallazgos quedarán sin asignar.');">
                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -128,14 +128,14 @@
                 <h3>No hay sectores registrados</h3>
                 <p style="color: var(--gray); margin-bottom: 2rem;">Divide el yacimiento en sectores para organizar mejor los hallazgos</p>
                 {% if puede_crear %}
-                    <a href="{{ url_for('nuevo_sector', yacimiento_id=yacimiento.id) }}" class="btn btn-success btn-lg">
+                    <a href="{{ url_for('sector.nuevo_sector', yacimiento_id=yacimiento.id) }}" class="btn btn-success btn-lg">
                         ➕ Crear Primer Sector
                     </a>
                 {% endif %}
             </div>
         {% endif %}
 
-        <a href="{{ url_for('detalle_yacimiento', id=yacimiento.id) }}" class="btn btn-secondary" style="margin-top: 2rem;">← Volver al Yacimiento</a>
+        <a href="{{ url_for('yacimiento.detalle', yacimiento_id=yacimiento.id) }}" class="btn btn-secondary" style="margin-top: 2rem;">← Volver al Yacimiento</a>
     </div>
 
     <!-- Mapa integrado -->
@@ -143,8 +143,8 @@
         <div class="card" style="margin-top: 2rem;">
             <h2 style="margin-bottom: 1rem;">Mapa de Sectores</h2>
             <p style="color: var(--gray); margin-bottom: 1.5rem;">Vista previa de la distribución de sectores</p>
-            <div id="mapa-sectores" style="height: 500px; border-radius: var(--border-radius-lg);"></div>
-            <a href="{{ url_for('mapa_sectores', yacimiento_id=yacimiento.id) }}" class="btn btn-info" style="margin-top: 1rem;">
+            <div id="sectores-map" style="height: 500px; border-radius: var(--border-radius-lg);"></div>
+            <a href="{{ url_for('sector.mapa_sectores', yacimiento_id=yacimiento.id) }}" class="btn btn-info" style="margin-top: 1rem;">
                 Ver Mapa Completo con Hallazgos
             </a>
         </div>

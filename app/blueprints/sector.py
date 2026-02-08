@@ -55,21 +55,33 @@ def listar(yacimiento_id):
     ).first():
         abort(403)
 
-    puede_crear = yacimiento.user_id == current_user.id or Invitacion.query.filter_by(
+    invitacion_aceptada = Invitacion.query.filter_by(
         yacimiento_id=yacimiento_id,
         invitado_id=current_user.id,
         estado='aceptada'
-    ).filter(Invitacion.rol.in_(['colaborador', 'asistente'])).first()
+    ).first()
+
+    puede_crear = yacimiento.user_id == current_user.id or (
+        invitacion_aceptada and invitacion_aceptada.rol in ['colaborador', 'asistente']
+    )
+    puede_editar_sectores = yacimiento.user_id == current_user.id or (
+        invitacion_aceptada and invitacion_aceptada.rol in ['editor', 'asistente']
+    )
+    puede_eliminar_sectores = yacimiento.user_id == current_user.id
 
     sectores = Sector.query.filter_by(yacimiento_id=yacimiento_id).all()
     sectores_json = [s.to_dict() for s in sectores]
+    total_hallazgos = sum(s.hallazgos.count() for s in sectores)
 
     return render_template(
         'sectores/listar.html',
         yacimiento=yacimiento,
         sectores=sectores,
         sectores_json=sectores_json,
-        puede_crear=puede_crear
+        puede_crear=puede_crear,
+        puede_editar_sectores=puede_editar_sectores,
+        puede_eliminar_sectores=puede_eliminar_sectores,
+        total_hallazgos=total_hallazgos
     )
 
 @sector_bp.route('/yacimiento/<int:yacimiento_id>/mapa_sectores')

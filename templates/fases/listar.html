@@ -72,7 +72,7 @@
 
                         <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
                             <a href="/fase/{{ fase.id }}" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: var(--font-sm);">Ver Detalles</a>
-                            <a href="/fase/{{ fase.id }}/editar" class="btn" style="padding: 0.5rem 1rem; font-size: var(--font-sm);">Editar</a>
+                            <a href="/editar_fase/{{ fase.id }}" class="btn" style="padding: 0.5rem 1rem; font-size: var(--font-sm);">Editar</a>
 
                             {% if not loop.first %}
                                 <form method="POST" action="/fase/{{ fase.id }}/cambiar_orden/arriba" style="display: inline;">
@@ -88,7 +88,7 @@
                                 </form>
                             {% endif %}
 
-                            <form method="POST" action="/fase/{{ fase.id }}/eliminar" style="display: inline;" onsubmit="return confirm('¿Eliminar esta fase?');">
+                            <form method="POST" action="/eliminar_fase/{{ fase.id }}" style="display: inline;" onsubmit="return confirm('¿Eliminar esta fase?');">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                 <button type="submit" class="btn btn-danger" style="padding: 0.5rem 1rem; font-size: var(--font-sm);">Eliminar</button>
                             </form>

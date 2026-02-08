@@ -41,12 +41,26 @@ def detalle(yacimiento_id):
     """Detalle del yacimiento"""
     yacimiento = Yacimiento.query.get_or_404(yacimiento_id)
 
+    invitacion_aceptada = Invitacion.query.filter_by(
+        yacimiento_id=yacimiento_id,
+        invitado_id=current_user.id,
+        estado='aceptada'
+    ).first()
+
+    if yacimiento.user_id != current_user.id and not invitacion_aceptada:
+        abort(403)
+
     # Verificar acceso
     puede_editar = yacimiento.user_id == current_user.id or Invitacion.query.filter_by(
         yacimiento_id=yacimiento_id,
         invitado_id=current_user.id,
         estado='aceptada',
         rol='asistente'
+    ).first() or Invitacion.query.filter_by(
+        yacimiento_id=yacimiento_id,
+        invitado_id=current_user.id,
+        estado='aceptada',
+        rol='editor'
     ).first()
 
     puede_crear = yacimiento.user_id == current_user.id or Invitacion.query.filter_by(
@@ -58,6 +72,13 @@ def detalle(yacimiento_id):
     hallazgos = Hallazgo.query.filter_by(yacimiento_id=yacimiento_id).all()
     sectores = Sector.query.filter_by(yacimiento_id=yacimiento_id).all()
     fases = FaseProyecto.query.filter_by(yacimiento_id=yacimiento_id).all()
+    es_propietario = yacimiento.user_id == current_user.id
+    rol_usuario = 'propietario' if es_propietario else (invitacion_aceptada.rol if invitacion_aceptada else None)
+    total_hallazgos = len(hallazgos)
+    total_sectores = len(sectores)
+    total_fases = len(fases)
+    hallazgos_con_foto = sum(1 for h in hallazgos if h.foto)
+    sectores_json = [s.to_dict() for s in sectores]
 
     return render_template(
         'yacimientos/detalle.html',
@@ -66,7 +87,14 @@ def detalle(yacimiento_id):
         sectores=sectores,
         fases=fases,
         puede_editar=puede_editar,
-        puede_crear=puede_crear
+        puede_crear=puede_crear,
+        es_propietario=es_propietario,
+        rol_usuario=rol_usuario,
+        total_hallazgos=total_hallazgos,
+        total_sectores=total_sectores,
+        total_fases=total_fases,
+        hallazgos_con_foto=hallazgos_con_foto,
+        sectores_json=sectores_json
     )
 
 @yacimiento_bp.route('/editar_yacimiento/<int:yacimiento_id>', methods=['GET', 'POST'])

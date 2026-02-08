@@ -88,8 +88,8 @@
                     </div>
 
                     <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
-                        <a href="/evento/{{ evento.id }}/editar" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: var(--font-sm);">Editar</a>
-                        <form method="POST" action="/evento/{{ evento.id }}/eliminar" style="display: inline;" onsubmit="return confirm('¿Eliminar este evento?');">
+                        <a href="/editar_evento/{{ evento.id }}" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: var(--font-sm);">Editar</a>
+                        <form method="POST" action="/eliminar_evento/{{ evento.id }}" style="display: inline;" onsubmit="return confirm('¿Eliminar este evento?');">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                             <button type="submit" class="btn btn-danger" style="padding: 0.5rem 1rem; font-size: var(--font-sm);">Eliminar</button>
                         </form>

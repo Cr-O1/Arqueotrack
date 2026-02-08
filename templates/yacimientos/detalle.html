@@ -113,13 +113,13 @@
         </div>
 
         <div class="button-group" style="margin-top: 1.5rem;">
-            <a href="{{ url_for('listar_fases', yacimiento_id=yacimiento.id) }}" class="btn btn-info">Ver Fases</a>
-            <a href="{{ url_for('listar_sectores', yacimiento_id=yacimiento.id) }}" class="btn btn-info">Ver Sectores</a>
-            <a href="{{ url_for('timeline', yacimiento_id=yacimiento.id) }}" class="btn btn-info">LÃ­nea de Tiempo</a>
+            <a href="{{ url_for('fase.listar', yacimiento_id=yacimiento.id) }}" class="btn btn-info">Ver Fases</a>
+            <a href="{{ url_for('sector.listar', yacimiento_id=yacimiento.id) }}" class="btn btn-info">Ver Sectores</a>
+            <a href="{{ url_for('evento.timeline', yacimiento_id=yacimiento.id) }}" class="btn btn-info">LÃ­nea de Tiempo</a>
             {% if es_propietario or rol_usuario == 'asistente' %}
-                <a href="{{ url_for('gestionar_invitaciones', yacimiento_id=yacimiento.id) }}" class="btn btn-warning">Invitaciones</a>
+                <a href="{{ url_for('invitacion.gestionar', yacimiento_id=yacimiento.id) }}" class="btn btn-warning">Invitaciones</a>
             {% endif %}
-            <a href="{{ url_for('proceso_yacimiento', id=yacimiento.id) }}" class="btn btn-secondary">Ver Proceso</a>
+            <a href="{{ url_for('yacimiento.proceso', yacimiento_id=yacimiento.id) }}" class="btn btn-secondary">Ver Proceso</a>
             {% if yacimiento.fecha_fin %}
                 <a href="/yacimiento/{{ yacimiento.id }}/informe" class="btn btn-success" style="display: inline-flex; align-items: center; gap: 0.5rem;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -147,7 +147,7 @@
 
     <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
-            <h2 style="margin: 0; border: none;">Hallazgos ({{ yacimiento.hallazgos|length }})</h2>
+            <h2 style="margin: 0; border: none;">Hallazgos ({{ hallazgos|length }})</h2>
             {% if puede_crear %}
                 <a href="/nuevo_hallazgo/{{ yacimiento.id }}" class="btn btn-success" style="margin: 0;">
                     âž• Registrar Hallazgo
@@ -155,9 +155,9 @@
             {% endif %}
         </div>
 
-        {% if yacimiento.hallazgos %}
+        {% if hallazgos %}
             <div class="hallazgos-list">
-                {% for hallazgo in yacimiento.hallazgos %}
+                {% for hallazgo in hallazgos %}
                     <div class="hallazgo-card">
                         {% if hallazgo.foto %}
                             <div style="margin-bottom: 1rem;">
