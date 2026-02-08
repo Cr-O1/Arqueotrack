@@ -72,7 +72,7 @@ def nuevo(yacimiento_id):
         except:
             db.session.rollback()
             flash('Error al registrar.', 'error')
-    return render_template('eventos/nuevo.html', form=form, yacimiento=yacimiento)
+    return render_template('eventos/nuevo.html', formulario=form, yacimiento=yacimiento)
 
 @evento_bp.route('/editar_evento/<int:evento_id>', methods=['GET', 'POST'])
 @login_required
@@ -103,7 +103,7 @@ def editar(evento_id):
         except:
             db.session.rollback()
             flash('Error al actualizar.', 'error')
-    return render_template('eventos/editar.html', form=form, evento=evento)
+    return render_template('eventos/editar.html', formulario=form, evento=evento)
 
 @evento_bp.route('/eliminar_evento/<int:evento_id>', methods=['POST'])
 @login_required

@@ -33,7 +33,7 @@ def nuevo_yacimiento():
         except:
             db.session.rollback()
             flash('Error al crear el yacimiento.', 'error')
-    return render_template('yacimientos/nuevo.html', form=form)
+    return render_template('yacimientos/nuevo.html', formulario=form)
 
 @yacimiento_bp.route('/yacimiento/<int:yacimiento_id>')
 @login_required
@@ -93,7 +93,7 @@ def editar(yacimiento_id):
         except:
             db.session.rollback()
             flash('Error al actualizar.', 'error')
-    return render_template('yacimientos/editar.html', form=form, yacimiento=yacimiento)
+    return render_template('yacimientos/editar.html', formulario=form, yacimiento=yacimiento)
 
 @yacimiento_bp.route('/eliminar_yacimiento/<int:yacimiento_id>', methods=['POST'])
 @login_required
@@ -174,4 +174,4 @@ def editar_proceso(yacimiento_id):
         except:
             db.session.rollback()
             flash('Error al actualizar.', 'error')
-    return render_template('yacimientos/editar_proceso.html', form=form, yacimiento=yacimiento)
+    return render_template('yacimientos/editar_proceso.html', formulario=form, yacimiento=yacimiento)

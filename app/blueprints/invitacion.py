@@ -21,11 +21,11 @@ def invitar(yacimiento_id):
         usuario = Usuario.query.filter_by(email=email).first()
         if not usuario:
             flash('Usuario no encontrado.', 'error')
-            return render_template('invitaciones/nueva.html', form=form, yacimiento=yacimiento)
+            return render_template('invitaciones/nueva.html', formulario=form, yacimiento=yacimiento)
 
         if Invitacion.query.filter_by(yacimiento_id=yacimiento_id, invitado_id=usuario.id).first():
             flash('Ya existe una invitación para este usuario.', 'error')
-            return render_template('invitaciones/nueva.html', form=form, yacimiento=yacimiento)
+            return render_template('invitaciones/nueva.html', formulario=form, yacimiento=yacimiento)
 
         try:
             invitacion = Invitacion(
@@ -43,7 +43,7 @@ def invitar(yacimiento_id):
         except:
             db.session.rollback()
             flash('Error al enviar.', 'error')
-    return render_template('invitaciones/nueva.html', form=form, yacimiento=yacimiento)
+    return render_template('invitaciones/nueva.html', formulario=form, yacimiento=yacimiento)
 
 @invitacion_bp.route('/yacimiento/<int:yacimiento_id>/invitaciones')
 @login_required

@@ -61,7 +61,7 @@ def nuevo(yacimiento_id):
         except:
             db.session.rollback()
             flash('Error al registrar.', 'error')
-    return render_template('hallazgos/nuevo.html', form=form, yacimiento=yacimiento)
+    return render_template('hallazgos/nuevo.html', formulario=form, yacimiento=yacimiento)
 
 @hallazgo_bp.route('/hallazgo/<int:hallazgo_id>')
 @login_required
@@ -145,7 +145,7 @@ def editar(hallazgo_id):
         except:
             db.session.rollback()
             flash('Error al actualizar.', 'error')
-    return render_template('hallazgos/editar.html', form=form, hallazgo=hallazgo)
+    return render_template('hallazgos/editar.html', formulario=form, hallazgo=hallazgo)
 
 @hallazgo_bp.route('/eliminar_hallazgo/<int:hallazgo_id>', methods=['POST'])
 @login_required

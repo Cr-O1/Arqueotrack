@@ -79,4 +79,4 @@ def buscar_codigo():
                 flash('No tienes acceso a este hallazgo.', 'error')
         else:
             flash('Código no encontrado.', 'error')
-    return render_template('buscar_codigo.html', form=form)
+    return render_template('buscar_codigo.html', formulario=form)

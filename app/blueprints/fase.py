@@ -38,7 +38,7 @@ def nueva(yacimiento_id):
         except:
             db.session.rollback()
             flash('Error al crear.', 'error')
-    return render_template('fases/nueva.html', form=form, yacimiento=yacimiento)
+    return render_template('fases/nueva.html', formulario=form, yacimiento=yacimiento)
 
 @fase_bp.route('/yacimiento/<int:yacimiento_id>/fases')
 @login_required
@@ -111,7 +111,7 @@ def editar(fase_id):
         except:
             db.session.rollback()
             flash('Error al actualizar.', 'error')
-    return render_template('fases/editar.html', form=form, fase=fase)
+    return render_template('fases/editar.html', formulario=form, fase=fase)
 
 @fase_bp.route('/eliminar_fase/<int:fase_id>', methods=['POST'])
 @login_required
