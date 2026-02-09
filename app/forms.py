@@ -93,8 +93,12 @@ class FaseForm(FlaskForm):
 class EventoForm(FlaskForm):
     tipo = SelectField('Tipo', choices=[('hallazgo', 'Hallazgo'), ('reunion', 'Reunión'), ('analisis', 'Análisis'), ('cambio_estado', 'Cambio Estado'), ('decision', 'Decisión'), ('visita', 'Visita'), ('entrega', 'Entrega'), ('otro', 'Otro')])
     titulo = StringField('Título', validators=[InputRequired()])
-    descripcion = TextAreaField('Descripción')
-    fecha = DateTimeField('Fecha', validators=[Optional()])
+    descripcion = TextAreaField('Descripción', validators=[InputRequired()])
+    fecha = DateTimeField(
+        'Fecha',
+        validators=[DataRequired()],
+        format='%Y-%m-%dT%H:%M'
+    )
     fase_id = SelectField('Fase', coerce=int)
     hallazgo_id = SelectField('Hallazgo', coerce=int)
     sector_id = SelectField('Sector', coerce=int)
