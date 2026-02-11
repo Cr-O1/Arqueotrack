@@ -53,12 +53,7 @@
 
                 {% for evento in eventos %}
                 <div class="timeline-event">
-                    <div class="timeline-dot" style="background: 
-                        {% if evento.tipo == 'hallazgo' %}var(--warning-color)
-                        {% elif evento.tipo == 'reunion' %}var(--info-color)
-                        {% elif evento.tipo == 'analisis' %}var(--success-color)
-                        {% elif evento.tipo == 'cambio_estado' %}var(--primary-color)
-                        {% else %}var(--secondary-color){% endif %};"></div>
+                    <div class="timeline-dot" style="background: {% if evento.tipo == 'hallazgo' %}var(--warning-color){% elif evento.tipo == 'reunion' %}var(--info-color){% elif evento.tipo == 'analisis' %}var(--success-color){% elif evento.tipo == 'cambio_estado' %}var(--primary-color){% else %}var(--secondary-color){% endif %};"></div>
 
                     <div class="timeline-header">
                         <h3 class="timeline-title">
