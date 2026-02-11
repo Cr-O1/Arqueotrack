@@ -2,6 +2,13 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, DateField, SelectField, TextAreaField, FloatField, DateTimeField, BooleanField, FileField
 from wtforms.validators import InputRequired, Length, Email, EqualTo, ValidationError, Optional, DataRequired
 from app.models.user import Usuario
+from app.utils import (
+    ESTADOS_CONSERVACION,
+    FASES_PREDEFINIDAS,
+    OCUPACIONES,
+    TIPOS_EVENTO,
+    TIPOS_HALLAZGO,
+)
 
 class RegistroForm(FlaskForm):
     nombre_usuario = StringField('Nombre de Usuario', validators=[InputRequired(), Length(min=4, max=20)])
@@ -9,7 +16,7 @@ class RegistroForm(FlaskForm):
     apellidos = StringField('Apellidos', validators=[InputRequired(), Length(max=100)])
     correo_electronico = StringField('Correo Electrónico', validators=[InputRequired(), Email(), Length(max=120)])
     fecha_nacimiento = DateField('Fecha de Nacimiento', validators=[InputRequired()])
-    ocupacion = StringField('Ocupación', validators=[Optional(), Length(max=50)])
+    ocupacion = SelectField('Ocupación', choices=OCUPACIONES, validators=[Optional()])
     contraseña = PasswordField('Contraseña', validators=[InputRequired(), Length(min=10)])
     confirmar_contraseña = PasswordField('Confirmar Contraseña', validators=[InputRequired(), EqualTo('contraseña')])
     enviar = SubmitField('Registrarse')
@@ -51,12 +58,12 @@ class EditarProcesoYacimientoForm(FlaskForm):
     submit = SubmitField('Guardar')
 
 class HallazgoForm(FlaskForm):
-    tipo = StringField('Tipo', validators=[InputRequired()])
+    tipo = SelectField('Tipo', choices=TIPOS_HALLAZGO, validators=[InputRequired()])
     material = StringField('Material')
     datacion = StringField('Datación')
     dimensiones = StringField('Dimensiones')
     peso = FloatField('Peso (g)', validators=[Optional()])
-    estado_conservacion = SelectField('Estado Conservación', choices=[('bueno', 'Bueno'), ('regular', 'Regular'), ('malo', 'Malo')])
+    estado_conservacion = SelectField('Estado Conservación', choices=ESTADOS_CONSERVACION)
     proceso_extraccion = TextAreaField('Proceso de Extracción', validators=[Optional()], render_kw={'rows': 4, 'placeholder': 'Describe el método de extracción...'})
     destino = StringField('Destino/Repositorio',  validators=[Optional()], render_kw={'placeholder': 'Ej: Museo Arqueológico, Laboratorio...'})
     descripcion = TextAreaField('Descripción')
@@ -81,17 +88,23 @@ class SectorForm(FlaskForm):
     submit = SubmitField('Guardar')
 
 class FaseForm(FlaskForm):
-    nombre = StringField('Nombre', validators=[InputRequired()])
+    nombre = SelectField('Nombre', choices=FASES_PREDEFINIDAS, validators=[InputRequired()])
     descripcion = TextAreaField('Descripción')
     estado = SelectField('Estado', choices=[('planificada', 'Planificada'), ('en_curso', 'En Curso'), ('finalizada', 'Finalizada')])
     fecha_inicio = DateField('Fecha Inicio', validators=[Optional()])
     fecha_fin = DateField('Fecha Fin', validators=[Optional()])
+    objetivos = TextAreaField('Objetivos', validators=[Optional()], render_kw={'rows': 3})
+    metodologia = TextAreaField('Metodología', validators=[Optional()], render_kw={'rows': 3})
+    recursos_necesarios = TextAreaField('Recursos Necesarios', validators=[Optional()], render_kw={'rows': 3})
+    resultados_esperados = TextAreaField('Resultados Esperados', validators=[Optional()], render_kw={'rows': 3})
+    presupuesto = FloatField('Presupuesto', validators=[Optional()])
+    equipo_participante = TextAreaField('Equipo Participante', validators=[Optional()], render_kw={'rows': 3})
     notas = TextAreaField('Notas', validators=[Optional()], render_kw={'rows': 3})
 
     submit = SubmitField('Guardar')
 
 class EventoForm(FlaskForm):
-    tipo = SelectField('Tipo', choices=[('hallazgo', 'Hallazgo'), ('reunion', 'Reunión'), ('analisis', 'Análisis'), ('cambio_estado', 'Cambio Estado'), ('decision', 'Decisión'), ('visita', 'Visita'), ('entrega', 'Entrega'), ('otro', 'Otro')])
+    tipo = SelectField('Tipo', choices=TIPOS_EVENTO)
     titulo = StringField('Título', validators=[InputRequired()])
     descripcion = TextAreaField('Descripción', validators=[InputRequired()])
     fecha = DateTimeField(
@@ -102,6 +115,10 @@ class EventoForm(FlaskForm):
     fase_id = SelectField('Fase', coerce=int)
     hallazgo_id = SelectField('Hallazgo', coerce=int)
     sector_id = SelectField('Sector', coerce=int)
+    prioridad = SelectField('Prioridad', choices=[('baja', 'Baja'), ('media', 'Media'), ('alta', 'Alta'), ('urgente', 'Urgente')])
+    estado_evento = SelectField('Estado', choices=[('pendiente', 'Pendiente'), ('en_progreso', 'En Progreso'), ('completado', 'Completado'), ('cancelado', 'Cancelado')])
+    participantes = TextAreaField('Participantes', validators=[Optional()], render_kw={'rows': 3})
+    resultados = TextAreaField('Resultados', validators=[Optional()], render_kw={'rows': 3})
     submit = SubmitField('Guardar')
 
 class InvitacionForm(FlaskForm):

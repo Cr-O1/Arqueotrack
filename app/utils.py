@@ -57,6 +57,33 @@ ROLES_PERMISOS = {
     "propietario": {"read", "edit", "create", "delete", "manage"}
 }
 
+
+PERMISOS_ACCION = {
+    "read": "read",
+    "view": "read",
+    "edit": "edit",
+    "create": "create",
+    "delete": "delete",
+    "manage": "manage",
+}
+
+
+def normalizar_permiso(permission):
+    """Normaliza alias de permisos para mantener compatibilidad."""
+    return PERMISOS_ACCION.get(permission, permission)
+
+
+def permisos_rol(rol):
+    """Obtiene permisos asociados a un rol."""
+    return ROLES_PERMISOS.get(rol, set())
+
+
+def tiene_permiso_rol(rol, permission):
+    """Verifica si un rol posee un permiso específico."""
+    permiso = normalizar_permiso(permission)
+    permisos = permisos_rol(rol)
+    return permiso in permisos or 'manage' in permisos
+
 def generar_codigo_unico():
     """Genera código alfanumérico único"""
     caracteres = string.ascii_uppercase + string.digits

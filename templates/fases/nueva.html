@@ -45,6 +45,36 @@
                 {{ formulario.estado(class="form-control", id="estado") }}
             </div>
 
+
+            <div class="form-group">
+                <label for="objetivos">Objetivos</label>
+                {{ formulario.objetivos(class="form-control", id="objetivos", rows=3) }}
+            </div>
+
+            <div class="form-group">
+                <label for="metodologia">Metodología</label>
+                {{ formulario.metodologia(class="form-control", id="metodologia", rows=3) }}
+            </div>
+
+            <div class="form-group">
+                <label for="recursos_necesarios">Recursos Necesarios</label>
+                {{ formulario.recursos_necesarios(class="form-control", id="recursos_necesarios", rows=3) }}
+            </div>
+
+            <div class="form-group">
+                <label for="resultados_esperados">Resultados Esperados</label>
+                {{ formulario.resultados_esperados(class="form-control", id="resultados_esperados", rows=3) }}
+            </div>
+
+            <div class="form-group">
+                <label for="equipo_participante">Equipo Participante</label>
+                {{ formulario.equipo_participante(class="form-control", id="equipo_participante", rows=3) }}
+            </div>
+
+            <div class="form-group">
+                <label for="presupuesto">Presupuesto (€)</label>
+                {{ formulario.presupuesto(class="form-control", id="presupuesto", type="number", step="0.01") }}
+            </div>
             <div class="form-group">
                 <label for="notas">Notas Adicionales</label>
                 {{ formulario.notas(class="form-control", id="notas", rows=3) }}

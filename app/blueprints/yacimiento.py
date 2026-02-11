@@ -1,12 +1,9 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request, abort, jsonify
+from flask import Blueprint, render_template, redirect, url_for, flash, abort
 from flask_login import login_required, current_user
 from app import db
-from app.models import Yacimiento, Hallazgo, Sector, FaseProyecto, Evento, Invitacion
+from app.models import Yacimiento, Hallazgo, Sector, FaseProyecto, Evento
 from app.forms import YacimientoForm, EditarProcesoYacimientoForm
-from app.utils import generar_codigo_unico, allowed_file, is_safe_url, time_ago
-from werkzeug.utils import secure_filename
-import os
-import json
+from app.utils import time_ago
 yacimiento_bp = Blueprint('yacimiento', __name__)
 
 @yacimiento_bp.route('/nuevo_yacimiento', methods=['GET', 'POST'])
@@ -45,39 +42,18 @@ def detalle(yacimiento_id):
     """Detalle del yacimiento"""
     yacimiento = Yacimiento.query.get_or_404(yacimiento_id)
 
-    invitacion_aceptada = Invitacion.query.filter_by(
-        yacimiento_id=yacimiento_id,
-        invitado_id=current_user.id,
-        estado='aceptada'
-    ).first()
-
-    if yacimiento.user_id != current_user.id and not invitacion_aceptada:
+    puede_ver, rol_invitado = current_user.has_permission(yacimiento_id, 'read')
+    if not puede_ver:
         abort(403)
 
-    # Verificar acceso
-    puede_editar = yacimiento.user_id == current_user.id or Invitacion.query.filter_by(
-        yacimiento_id=yacimiento_id,
-        invitado_id=current_user.id,
-        estado='aceptada',
-        rol='asistente'
-    ).first() or Invitacion.query.filter_by(
-        yacimiento_id=yacimiento_id,
-        invitado_id=current_user.id,
-        estado='aceptada',
-        rol='editor'
-    ).first()
-
-    puede_crear = yacimiento.user_id == current_user.id or Invitacion.query.filter_by(
-        yacimiento_id=yacimiento_id,
-        invitado_id=current_user.id,
-        estado='aceptada'
-    ).filter(Invitacion.rol.in_(['colaborador', 'asistente'])).first()
+    puede_editar, _ = current_user.has_permission(yacimiento_id, 'edit')
+    puede_crear, _ = current_user.has_permission(yacimiento_id, 'create')
 
     hallazgos = Hallazgo.query.filter_by(yacimiento_id=yacimiento_id).all()
     sectores = Sector.query.filter_by(yacimiento_id=yacimiento_id).all()
     fases = FaseProyecto.query.filter_by(yacimiento_id=yacimiento_id).all()
     es_propietario = yacimiento.user_id == current_user.id
-    rol_usuario = 'propietario' if es_propietario else (invitacion_aceptada.rol if invitacion_aceptada else None)
+    rol_usuario = 'propietario' if es_propietario else rol_invitado
     total_hallazgos = len(hallazgos)
     total_sectores = len(sectores)
     total_fases = len(fases)
@@ -154,25 +130,12 @@ def proceso(yacimiento_id):
     yacimiento = Yacimiento.query.get_or_404(yacimiento_id)
 
     # Verificar acceso
-    if yacimiento.user_id != current_user.id and not Invitacion.query.filter_by(
-        yacimiento_id=yacimiento_id,
-        invitado_id=current_user.id,
-        estado='aceptada'
-    ).first():
+    puede_ver, _ = current_user.has_permission(yacimiento_id, 'read')
+    if not puede_ver:
         abort(403)
 
-    puede_editar = yacimiento.user_id == current_user.id or Invitacion.query.filter_by(
-        yacimiento_id=yacimiento_id,
-        invitado_id=current_user.id,
-        estado='aceptada',
-        rol='asistente'
-    ).first()
-
-    puede_crear = yacimiento.user_id == current_user.id or Invitacion.query.filter_by(
-        yacimiento_id=yacimiento_id,
-        invitado_id=current_user.id,
-        estado='aceptada'
-    ).filter(Invitacion.rol.in_(['colaborador', 'asistente'])).first()
+    puede_editar, _ = current_user.has_permission(yacimiento_id, 'edit')
+    puede_crear, _ = current_user.has_permission(yacimiento_id, 'create')
 
     fases = FaseProyecto.query.filter_by(yacimiento_id=yacimiento_id).order_by(FaseProyecto.orden).all()
     eventos = Evento.query.filter_by(yacimiento_id=yacimiento_id).order_by(Evento.fecha.desc()).limit(5).all()
