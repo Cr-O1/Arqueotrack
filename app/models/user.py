@@ -10,7 +10,7 @@ class Usuario(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     nombre_usuario = db.Column(db.String(80), unique=True, nullable=False, index=True)
     email = db.Column(db.String(120), unique=True, nullable=False, index=True)
-    password_hash = db.Column(db.String(200), nullable=False)
+    contraseña = db.Column(db.String(200), nullable=False)
 
     # Información personal
     nombre = db.Column(db.String(100), nullable=False)
@@ -35,11 +35,11 @@ class Usuario(db.Model, UserMixin):
 
     def set_password(self, password):
         """Hash de contraseña"""
-        self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+        self.contraseña = bcrypt.generate_password_hash(password).decode('utf-8')
 
     def check_password(self, password):
         """Verificar contraseña"""
-        return bcrypt.check_password_hash(self.password_hash, password)
+        return bcrypt.check_password_hash(self.contraseña, password)
 
     @property
     def nombre_completo(self):
