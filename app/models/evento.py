@@ -80,6 +80,8 @@ class Evento(db.Model):
             'descripcion': self.descripcion,
             'fecha': self.fecha.isoformat(),
             'ubicacion': self.ubicacion,
+            'participantes': self.participantes,
+            'resultados': self.resultados,
             'prioridad': self.prioridad,
             'estado_evento': self.estado_evento,
             'yacimiento_id': self.yacimiento_id,

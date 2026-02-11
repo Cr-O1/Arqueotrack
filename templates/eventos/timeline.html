@@ -73,6 +73,8 @@
 
                     <div class="timeline-meta">
                         <span>Tipo: {% if evento.tipo == 'hallazgo' %}Hallazgo{% elif evento.tipo == 'reunion' %}Reunión{% elif evento.tipo == 'analisis' %}Análisis{% elif evento.tipo == 'cambio_estado' %}Cambio de Estado{% elif evento.tipo == 'decision' %}Decisión{% elif evento.tipo == 'visita' %}Visita{% elif evento.tipo == 'entrega' %}Entrega{% else %}Otro{% endif %}</span>
+                        <span>Prioridad: {{ evento.prioridad|replace('_', ' ')|title }}</span>
+                        <span>Estado: {{ evento.estado_evento|replace('_', ' ')|title }}</span>
                         {% if evento.usuario %}
                         <span>Usuario: {{ evento.usuario.nombre_usuario }}</span>
                         {% endif %}
@@ -86,6 +88,13 @@
                         <span>Sector: <a href="/sector/{{ evento.sector.id }}" style="color: var(--primary-color); text-decoration: none;">{{ evento.sector.nombre }}</a></span>
                         {% endif %}
                     </div>
+
+                    {% if evento.participantes or evento.resultados %}
+                    <div style="margin-top: 0.75rem; padding: 0.75rem; background: var(--light-gray); border-radius: var(--border-radius);">
+                        {% if evento.participantes %}<div><strong>Participantes:</strong> {{ evento.participantes }}</div>{% endif %}
+                        {% if evento.resultados %}<div style="margin-top: 0.5rem;"><strong>Resultados:</strong> {{ evento.resultados }}</div>{% endif %}
+                    </div>
+                    {% endif %}
 
                     <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
                         <a href="/editar_evento/{{ evento.id }}" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: var(--font-sm);">Editar</a>

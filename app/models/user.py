@@ -1,6 +1,7 @@
 from datetime import datetime
 from flask_login import UserMixin
 from app import bcrypt, db
+from app.utils import tiene_permiso_rol
 
 
 class Usuario(db.Model, UserMixin):
@@ -67,16 +68,7 @@ class Usuario(db.Model, UserMixin):
         if not invitacion:
             return False, None
 
-        # Permisos por rol (definir según necesidades)
-        ROLES_PERMISOS = {
-            'visualizador': {'view'},
-            'editor': {'view', 'edit'},
-            'colaborador': {'view', 'edit', 'create'},
-            'asistente': {'view', 'edit', 'create', 'manage'}
-        }
-        permisos = ROLES_PERMISOS.get(invitacion.rol, set())
-        tiene_permiso = permission in permisos or 'manage' in permisos
-
+        tiene_permiso = tiene_permiso_rol(invitacion.rol, permission)
         return tiene_permiso, invitacion.rol
 
     def to_dict(self):

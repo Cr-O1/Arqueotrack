@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, abort, current_app
 from flask_login import login_required, current_user
 from app import db
-from app.models import Hallazgo, Yacimiento, Sector, Comentario, Invitacion
+from app.models import Hallazgo, Yacimiento, Sector, Comentario
 from app.forms import HallazgoForm
 from app.utils import generar_codigo_unico, allowed_file, time_ago
 from werkzeug.utils import secure_filename
@@ -15,12 +15,8 @@ def nuevo(yacimiento_id):
     """Crear nuevo hallazgo"""
     yacimiento = Yacimiento.query.get_or_404(yacimiento_id)
 
-    # Verificar permiso
-    if yacimiento.user_id != current_user.id and not Invitacion.query.filter_by(
-        yacimiento_id=yacimiento_id,
-        invitado_id=current_user.id,
-        estado='aceptada'
-    ).filter(Invitacion.rol.in_(['colaborador', 'asistente'])).first():
+    puede_crear, _ = current_user.has_permission(yacimiento_id, 'create')
+    if not puede_crear:
         abort(403)
 
     form = HallazgoForm()
@@ -41,9 +37,14 @@ def nuevo(yacimiento_id):
                 peso=form.peso.data,
                 estado_conservacion=form.estado_conservacion.data,
                 descripcion=form.descripcion.data,
+                ubicacion=form.ubicacion.data,
                 lat=form.lat.data,
                 lng=form.lng.data,
+                altitud=form.altitud.data,
                 fecha=form.fecha.data,
+                proceso_extraccion=form.proceso_extraccion.data,
+                destino=form.destino.data,
+                notas=form.notas.data,
                 codigo_acceso=codigo
             )
 
@@ -70,25 +71,12 @@ def detalle(hallazgo_id):
     hallazgo = Hallazgo.query.get_or_404(hallazgo_id)
 
     # Verificar acceso
-    es_propietario_yacimiento = hallazgo.yacimiento and hallazgo.yacimiento.user_id == current_user.id
-    if hallazgo.user_id != current_user.id and not es_propietario_yacimiento and not Invitacion.query.filter_by(
-        yacimiento_id=hallazgo.yacimiento_id,
-        invitado_id=current_user.id,
-        estado='aceptada'
-    ).first():
+    puede_ver, _ = current_user.has_permission(hallazgo.yacimiento_id, 'read')
+    if hallazgo.user_id != current_user.id and not puede_ver:
         abort(403)
 
-    puede_editar = hallazgo.user_id == current_user.id or es_propietario_yacimiento or Invitacion.query.filter_by(
-        yacimiento_id=hallazgo.yacimiento_id,
-        invitado_id=current_user.id,
-        estado='aceptada',
-        rol='editor'  
-    ).first() or Invitacion.query.filter_by(
-        yacimiento_id=hallazgo.yacimiento_id,
-        invitado_id=current_user.id,
-        estado='aceptada',
-        rol='asistente'
-    ).first()
+    puede_editar_rol, _ = current_user.has_permission(hallazgo.yacimiento_id, 'edit')
+    puede_editar = hallazgo.user_id == current_user.id or puede_editar_rol
 
     comentarios = Comentario.query.filter_by(hallazgo_id=hallazgo_id).order_by(Comentario.fecha.desc()).all()
 
@@ -106,13 +94,8 @@ def editar(hallazgo_id):
     """Editar hallazgo"""
     hallazgo = Hallazgo.query.get_or_404(hallazgo_id)
 
-    es_propietario_yacimiento = hallazgo.yacimiento and hallazgo.yacimiento.user_id == current_user.id
-    if hallazgo.user_id != current_user.id and not es_propietario_yacimiento and not Invitacion.query.filter_by(
-        yacimiento_id=hallazgo.yacimiento_id,
-        invitado_id=current_user.id,
-        estado='aceptada',
-        rol='editor'
-    ).first():
+    puede_editar_rol, _ = current_user.has_permission(hallazgo.yacimiento_id, 'edit')
+    if hallazgo.user_id != current_user.id and not puede_editar_rol:
         abort(403)
 
     form = HallazgoForm(obj=hallazgo)
@@ -127,9 +110,14 @@ def editar(hallazgo_id):
             hallazgo.peso = form.peso.data
             hallazgo.estado_conservacion = form.estado_conservacion.data
             hallazgo.descripcion = form.descripcion.data
+            hallazgo.ubicacion = form.ubicacion.data
             hallazgo.lat = form.lat.data
             hallazgo.lng = form.lng.data
+            hallazgo.altitud = form.altitud.data
             hallazgo.fecha = form.fecha.data
+            hallazgo.proceso_extraccion = form.proceso_extraccion.data
+            hallazgo.destino = form.destino.data
+            hallazgo.notas = form.notas.data
             hallazgo.sector_id = form.sector_id.data if form.sector_id.data != 0 else None
 
             if 'foto' in request.files:
@@ -152,7 +140,8 @@ def editar(hallazgo_id):
 def eliminar(hallazgo_id):
     """Eliminar hallazgo"""
     hallazgo = Hallazgo.query.get_or_404(hallazgo_id)
-    if hallazgo.user_id != current_user.id and hallazgo.yacimiento.user_id != current_user.id:
+    puede_eliminar_rol, _ = current_user.has_permission(hallazgo.yacimiento_id, 'delete')
+    if hallazgo.user_id != current_user.id and not puede_eliminar_rol:
         abort(403)
     try:
         db.session.delete(hallazgo)
@@ -170,12 +159,8 @@ def comentar(hallazgo_id):
     hallazgo = Hallazgo.query.get_or_404(hallazgo_id)
 
     # Verificar acceso
-    es_propietario_yacimiento = hallazgo.yacimiento and hallazgo.yacimiento.user_id == current_user.id
-    if hallazgo.user_id != current_user.id and not es_propietario_yacimiento and not Invitacion.query.filter_by(
-        yacimiento_id=hallazgo.yacimiento_id,
-        invitado_id=current_user.id,
-        estado='aceptada'
-    ).first():
+    puede_ver, _ = current_user.has_permission(hallazgo.yacimiento_id, 'read')
+    if hallazgo.user_id != current_user.id and not puede_ver:
         abort(403)
 
     texto = request.form.get('texto')

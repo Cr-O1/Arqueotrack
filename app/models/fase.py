@@ -87,7 +87,13 @@ class FaseProyecto(db.Model):
             'orden': self.orden,
             'fecha_inicio': self.fecha_inicio.isoformat() if self.fecha_inicio else None,
             'fecha_fin': self.fecha_fin.isoformat() if self.fecha_fin else None,
+            'objetivos': self.objetivos,
+            'metodologia': self.metodologia,
+            'recursos_necesarios': self.recursos_necesarios,
+            'resultados_esperados': self.resultados_esperados,
             'presupuesto': self.presupuesto,
+            'equipo_participante': self.equipo_participante,
+            'notas': self.notas,
             'yacimiento_id': self.yacimiento_id,
             'responsable_id': self.responsable_id
         }
