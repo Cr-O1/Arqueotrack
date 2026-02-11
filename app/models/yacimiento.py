@@ -100,6 +100,12 @@ class Yacimiento(db.Model):
         return self.hallazgos.count()
 
     @property
+    def hallazgos_con_foto(self):
+        """Retorna el total de hallazgos con foto"""
+        from app.models.hallazgo import Hallazgo
+        return self.hallazgos.filter(Hallazgo.foto != None, Hallazgo.foto != '').count()
+
+    @property
     def total_sectores(self):
         """Retorna el total de sectores del yacimiento"""
         return self.sectores.count()

@@ -57,7 +57,6 @@ ROLES_PERMISOS = {
     "propietario": {"read", "edit", "create", "delete", "manage"}
 }
 
-
 PERMISOS_ACCION = {
     "read": "read",
     "view": "read",
@@ -84,20 +83,24 @@ def tiene_permiso_rol(rol, permission):
     permisos = permisos_rol(rol)
     return permiso in permisos or 'manage' in permisos
 
+
 def generar_codigo_unico():
     """Genera código alfanumérico único"""
     caracteres = string.ascii_uppercase + string.digits
     return ''.join(random.choice(caracteres) for _ in range(10))
 
+
 def allowed_file(filename):
     """Verifica extensión permitida"""
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+
 
 def is_safe_url(target):
     """Verifica URL segura"""
     ref_url = urlparse(request.host_url)
     test_url = urlparse(urljoin(request.host_url, target))
     return test_url.scheme in ('http', 'https') and ref_url.netloc == test_url.netloc
+
 
 def time_ago(fecha):
     """Calcula tiempo transcurrido"""

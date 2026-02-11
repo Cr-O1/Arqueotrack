@@ -49,16 +49,12 @@ def detalle(yacimiento_id):
     puede_editar, _ = current_user.has_permission(yacimiento_id, 'edit')
     puede_crear, _ = current_user.has_permission(yacimiento_id, 'create')
 
-    hallazgos = Hallazgo.query.filter_by(yacimiento_id=yacimiento_id).all()
-    sectores = Sector.query.filter_by(yacimiento_id=yacimiento_id).all()
-    fases = FaseProyecto.query.filter_by(yacimiento_id=yacimiento_id).all()
     es_propietario = yacimiento.user_id == current_user.id
     rol_usuario = 'propietario' if es_propietario else rol_invitado
-    total_hallazgos = len(hallazgos)
-    total_sectores = len(sectores)
-    total_fases = len(fases)
+    hallazgos = Hallazgo.query.filter_by(yacimiento_id=yacimiento_id).all()
     hallazgos_con_foto = sum(1 for h in hallazgos if h.foto)
-    sectores_json = [s.to_dict() for s in sectores]
+    sectores = Sector.query.filter_by(yacimiento_id=yacimiento_id).all()
+    fases = FaseProyecto.query.filter_by(yacimiento_id=yacimiento_id).all()
 
     return render_template(
         'yacimientos/detalle.html',
@@ -70,11 +66,10 @@ def detalle(yacimiento_id):
         puede_crear=puede_crear,
         es_propietario=es_propietario,
         rol_usuario=rol_usuario,
-        total_hallazgos=total_hallazgos,
-        total_sectores=total_sectores,
-        total_fases=total_fases,
-        hallazgos_con_foto=hallazgos_con_foto,
-        sectores_json=sectores_json
+        total_hallazgos=len(hallazgos),
+        total_sectores=len(sectores),
+        total_fases=len(fases),
+        hallazgos_con_foto=hallazgos_con_foto
     )
 
 @yacimiento_bp.route('/editar_yacimiento/<int:yacimiento_id>', methods=['GET', 'POST'])
