@@ -14,7 +14,7 @@ function initAdvancedSectoresMap(yacimiento, sectores, hallazgos) {
   if (yacimiento.lat && yacimiento.lng) {
       const yacIcon = L.divIcon({
           className: 'yacimiento-marker',
-          html: `<div style="background: #a0826d; width: 40px; height: 40px; border-radius: 50%; border: 4px solid white; box-shadow: 0 3px 10px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">ðŸ›ï¸</div>`,
+          html: `<div style="background: #a0826d; width: 40px; height: 40px; border-radius: 50%; border: 4px solid white; box-shadow: 0 3px 10px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🏛️</div>`,
           iconSize: [40, 40],
           iconAnchor: [20, 20]
       });
@@ -38,9 +38,9 @@ function initAdvancedSectoresMap(yacimiento, sectores, hallazgos) {
               const popupContent = `
                   <div style="min-width: 180px;">
                       <strong style="color: ${sector.color}; font-size: 1.1rem;">${sector.nombre}</strong><br>
-                      <span style="font-size: 0.9rem;">Ãrea: ${sector.area || 'N/A'} mÂ²</span><br>
+                      <span style="font-size: 0.9rem;">Área: ${sector.area || 'N/A'} m²</span><br>
                       <span style="font-size: 0.9rem;">Hallazgos: ${sector.hallazgos_count || 0}</span><br>
-                      <a href="/sector/${sector.id}" style="color: #6366F1; text-decoration: none; font-weight: 600; margin-top: 0.5rem; display: inline-block;">Ver detalles â†’</a>
+                      <a href="/sector/${sector.id}" style="color: #6366F1; text-decoration: none; font-weight: 600; margin-top: 0.5rem; display: inline-block;">Ver detalles →</a>
                   </div>
               `;
 
@@ -85,10 +85,10 @@ function initAdvancedSectoresMap(yacimiento, sectores, hallazgos) {
 
               const popupContent = `
                   <div style="min-width: 150px;">
-                      <strong>ðŸº ${hallazgo.tipo}</strong><br>
+                      <strong>🏺 ${hallazgo.tipo}</strong><br>
                       <span style="font-family: monospace; color: #6366F1; font-size: 0.9rem;">${hallazgo.codigo}</span><br>
-                      ${sector ? `<span style="font-size: 0.85rem;">ðŸ“ ${sector.nombre}</span><br>` : ''}
-                      <a href="/hallazgo/${hallazgo.id}" style="color: #6366F1; text-decoration: none; font-weight: 600;">Ver detalles â†’</a>
+                      ${sector ? `<span style="font-size: 0.85rem;">📐 ${sector.nombre}</span><br>` : ''}
+                      <a href="/hallazgo/${hallazgo.id}" style="color: #6366F1; text-decoration: none; font-weight: 600;">Ver detalles →</a>
                   </div>
               `;
 
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const calcTool = document.createElement('div');
       calcTool.style.cssText = 'margin-top: 0.5rem; padding: 1rem; background: var(--light-gray); border-radius: var(--border-radius); border-left: 3px solid var(--info-color);';
       calcTool.innerHTML = `
-          <strong style="color: var(--info-color);">Calculadora de Ãrea</strong>
+          <strong style="color: var(--info-color);">Calculadora de Área</strong>
           <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.5rem; margin-top: 0.5rem; align-items: end;">
               <div>
                   <label style="font-size: var(--font-sm);">Largo (m)</label>
@@ -202,10 +202,10 @@ document.addEventListener('DOMContentLoaded', function() {
           if (largo > 0 && ancho > 0) {
               const area = (largo * ancho).toFixed(2);
               areaInput.value = area;
-              document.getElementById('resultado-calculo').textContent = `Ãrea calculada: ${area} mÂ²`;
-              showAlert(`Ãrea de ${area} mÂ² calculada correctamente`, 'success');
+              document.getElementById('resultado-calculo').textContent = `Área calculada: ${area} m²`;
+              showAlert(`Área de ${area} m² calculada correctamente`, 'success');
           } else {
-              showAlert('Introduce valores vÃ¡lidos para largo y ancho', 'warning');
+              showAlert('Introduce valores válidos para largo y ancho', 'warning');
           }
       });
   }
@@ -238,7 +238,7 @@ function mostrarEstadisticasSectores() {
   const statItems = [
       { value: stats.total, label: 'Total Sectores', style: '' },
       { value: stats.conHallazgos, label: 'Con Hallazgos', style: 'background: linear-gradient(135deg, var(--success-color), #059669);' },
-      { value: stats.areaTotal.toFixed(0), label: 'Ãrea Total (mÂ²)', style: 'background: linear-gradient(135deg, var(--info-color), #2563eb);' },
+      { value: stats.areaTotal.toFixed(0), label: 'Área Total (m²)', style: 'background: linear-gradient(135deg, var(--info-color), #2563eb);' },
       { value: stats.hallazgosTotales, label: 'Hallazgos Totales', style: 'background: linear-gradient(135deg, var(--warning-color), #f59e0b);' }
   ];
 

@@ -69,7 +69,7 @@ function initFormMap(lat = 40.4168, lng = -3.7038) {
         draggable: true,
         icon: L.divIcon({
             className: 'custom-marker',
-            html: '<div style="background: #6366F1; width: 35px; height: 35px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">ðŸ“</div>',
+            html: '<div style="background: #6366F1; width: 35px; height: 35px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">📍</div>',
             iconSize: [35, 35],
             iconAnchor: [17.5, 17.5]
         })
@@ -132,7 +132,7 @@ function initSectoresMap(yacimiento, sectores, hallazgos) {
         const yacMarker = L.marker([yacimiento.lat, yacimiento.lng], {
             icon: L.divIcon({
                 className: 'yacimiento-marker',
-                html: '<div style="background: #a0826d; width: 40px; height: 40px; border-radius: 50%; border: 4px solid white; box-shadow: 0 3px 10px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">ðŸ›ï¸</div>',
+                html: '<div style="background: #a0826d; width: 40px; height: 40px; border-radius: 50%; border: 4px solid white; box-shadow: 0 3px 10px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🏛️</div>',
                 iconSize: [40, 40],
                 iconAnchor: [20, 20]
             })
@@ -206,7 +206,7 @@ function initSectoresMap(yacimiento, sectores, hallazgos) {
                         <strong style="color: ${sector.color};">${sector.nombre}</strong><br>
                         <span style="font-size: 0.9rem;">Área: ${sector.area ? sector.area.toFixed(2) : 'N/A'} m²</span><br>
                         <span style="font-size: 0.9rem;">Hallazgos: ${sector.hallazgos_count || 0}</span><br>
-                        <a href="/sector/${sector.id}" style="color: #6366F1; text-decoration: none;">Ver detalles â†’</a>
+                        <a href="/sector/${sector.id}" style="color: #6366F1; text-decoration: none;">Ver detalles →</a>
                     </div>
                 `;
 
@@ -249,9 +249,9 @@ function initSectoresMap(yacimiento, sectores, hallazgos) {
 
                 const popupContent = `
                     <div style="min-width: 150px;">
-                        <strong>ðŸº ${hallazgo.tipo}</strong><br>
+                        <strong>🏺 ${hallazgo.tipo}</strong><br>
                         <span style="font-family: monospace; color: #6366F1;">${hallazgo.codigo}</span><br>
-                        <a href="/hallazgo/${hallazgo.id}" style="color: #6366F1; text-decoration: none;">Ver detalles â†’</a>
+                        <a href="/hallazgo/${hallazgo.id}" style="color: #6366F1; text-decoration: none;">Ver detalles →</a>
                     </div>
                 `;
 
@@ -270,9 +270,9 @@ function initSectoresMap(yacimiento, sectores, hallazgos) {
     return map;
 }
 
-// FunciÃ³n auxiliar para crear cÃ­rculo de sector
+// Función auxiliar para crear círculo de sector
 function createSectorCircle(sector, map) {
-    const radius = Math.sqrt(sector.area || 100) * 5; // Radio mÃ¡s pequeÃ±o
+    const radius = Math.sqrt(sector.area || 100) * 5; // Radio más pequeño
     return L.circle([sector.lat, sector.lng], {
         color: sector.color || '#6366F1',
         fillColor: sector.color || '#6366F1',
@@ -282,7 +282,7 @@ function createSectorCircle(sector, map) {
     }).addTo(map);
 }
 
-// FunciÃ³n auxiliar para obtener centroide de un GeoJSON
+// Función auxiliar para obtener centroide de un GeoJSON
 function getCentroidFromGeojson(geojsonData) {
     try {
         if (typeof geojsonData === 'string') {

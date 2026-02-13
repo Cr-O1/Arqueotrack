@@ -1,4 +1,4 @@
-// Sistema de dibujo de polÃ­gonos para yacimientos y sectores
+// Sistema de dibujo de polígonos para yacimientos y sectores
 function initPolygonDrawMap(options = {}) {
     const mapElement = document.getElementById(options.mapId || 'polygon-map');
     if (!mapElement) return null;
@@ -56,7 +56,7 @@ function initPolygonDrawMap(options = {}) {
     const latInput = document.getElementById('lat');
     const lngInput = document.getElementById('lng');
 
-    // Calcular Ã¡rea usando Turf.js si estÃ¡ disponible
+    // Calcular área usando Turf.js si está disponible
     function calculateArea(layer) {
         if (typeof turf !== 'undefined') {
             const geojson = layer.toGeoJSON();
@@ -66,7 +66,7 @@ function initPolygonDrawMap(options = {}) {
         return null;
     }
 
-    // Obtener centroide del polÃ­gono
+    // Obtener centroide del polígono
     function getCentroid(layer) {
         if (typeof turf !== 'undefined') {
             const geojson = layer.toGeoJSON();
@@ -83,25 +83,25 @@ function initPolygonDrawMap(options = {}) {
         return { lat: center.lat, lng: center.lng };
     }
 
-    // CORREGIDO: Actualizar datos del polÃ­gono
+    // CORREGIDO: Actualizar datos del polígono
     function updatePolygonData(layer) {
         const geojson = layer.toGeoJSON().geometry;
 
         // Guardar GeoJSON
         if (polygonInput) {
             polygonInput.value = JSON.stringify(geojson);
-            console.log('PolÃ­gono guardado:', geojson);
+            console.log('Polígono guardado:', geojson);
         }
 
-        // Calcular y guardar Ã¡rea
+        // Calcular y guardar área
         const area = calculateArea(layer);
         if (area !== null) {
             if (areaInput) {
                 areaInput.value = area.toFixed(2);
-                console.log('Ãrea calculada:', area, 'mÂ²');
+                console.log('Área calculada:', area, 'm²');
             }
             if (areaDisplay) {
-                areaDisplay.textContent = `Ãrea calculada: ${formatArea(area)}`;
+                areaDisplay.textContent = `Área calculada: ${formatArea(area)}`;
                 areaDisplay.style.display = 'block';
             }
         }
@@ -117,15 +117,15 @@ function initPolygonDrawMap(options = {}) {
         }
     }
 
-    // Formatear Ã¡rea para mostrar
+    // Formatear área para mostrar
     function formatArea(areaM2) {
         if (areaM2 >= 10000) {
-            return `${(areaM2 / 10000).toFixed(2)} ha (${areaM2.toLocaleString()} mÂ²)`;
+            return `${(areaM2 / 10000).toFixed(2)} ha (${areaM2.toLocaleString()} m²)`;
         }
-        return `${areaM2.toLocaleString()} mÂ²`;
+        return `${areaM2.toLocaleString()} m²`;
     }
 
-    // Limpiar datos del polÃ­gono
+    // Limpiar datos del polígono
     function clearPolygonData() {
         if (polygonInput) polygonInput.value = '';
         if (areaInput) areaInput.value = '';
@@ -137,31 +137,31 @@ function initPolygonDrawMap(options = {}) {
         if (coordsDisplay) coordsDisplay.textContent = '';
     }
 
-    // Evento: PolÃ­gono creado
+    // Evento: Polígono creado
     map.on(L.Draw.Event.CREATED, function(e) {
-        drawnItems.clearLayers(); // Solo un polÃ­gono a la vez
+        drawnItems.clearLayers(); // Solo un polígono a la vez
         drawnItems.addLayer(e.layer);
         updatePolygonData(e.layer);
 
-        // Centrar mapa en el polÃ­gono
+        // Centrar mapa en el polígono
         map.fitBounds(e.layer.getBounds().pad(0.1));
     });
 
-    // Evento: PolÃ­gono editado
+    // Evento: Polígono editado
     map.on(L.Draw.Event.EDITED, function(e) {
         e.layers.eachLayer(function(layer) {
             updatePolygonData(layer);
         });
     });
 
-    // Evento: PolÃ­gono eliminado
+    // Evento: Polígono eliminado
     map.on(L.Draw.Event.DELETED, function(e) {
         if (drawnItems.getLayers().length === 0) {
             clearPolygonData();
         }
     });
 
-    // Cargar polÃ­gono existente si se proporciona
+    // Cargar polígono existente si se proporciona
     if (existingPolygon) {
         try {
             let geojsonData = existingPolygon;
@@ -206,7 +206,7 @@ function initPolygonDrawMap(options = {}) {
     };
 }
 
-// FunciÃ³n especÃ­fica para sectores
+// Función específica para sectores
 function initSectorPolygonMap(options = {}) {
     return initPolygonDrawMap({
         ...options,
