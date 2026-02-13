@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const popupContent = `
                     <div style="min-width: 200px;">
                         <strong style="font-size: 1.1rem; color: #a0826d;">${yacimiento.nombre}</strong><br>
-                        <span style="color: #5d4037;">${yacimiento.ubicacion || 'Sin ubicaciÃ³n'}</span><br>
-                        <a href="/yacimiento/${yacimiento.id}" style="color: #6366F1; text-decoration: none; font-weight: 600; margin-top: 0.5rem; display: inline-block;">Ver detalles â†’</a>
+                        <span style="color: #5d4037;">${yacimiento.ubicacion || 'Sin ubicación'}</span><br>
+                        <a href="/yacimiento/${yacimiento.id}" style="color: #6366F1; text-decoration: none; font-weight: 600; margin-top: 0.5rem; display: inline-block;">Ver detalles</a>
                     </div>
                 `;
 
@@ -158,10 +158,10 @@ function initSectoresMap(yacimiento, sectores, hallazgos) {
                     }
                 }).addTo(map);
 
-                yacPolygon.bindPopup(`<strong>${yacimiento.nombre}</strong><br>PerÃ­metro del yacimiento`);
+                yacPolygon.bindPopup(`<strong>${yacimiento.nombre}</strong><br>Perímetro del yacimiento`);
                 allLayers.push(yacPolygon);
             } catch (e) {
-                console.error('Error al cargar polÃ­gono del yacimiento:', e);
+                console.error('Error al cargar polígono del yacimiento:', e);
             }
         }
     }
@@ -189,13 +189,13 @@ function initSectoresMap(yacimiento, sectores, hallazgos) {
 
                         allLayers.push(sectorLayer);
                     } catch (e) {
-                        console.error('Error al cargar polÃ­gono del sector:', e);
-                        // Si falla, usar cÃ­rculo como fallback
+                        console.error('Error al cargar polígono del sector:', e);
+                       
                         sectorLayer = createSectorCircle(sector, map);
                         allLayers.push(sectorLayer);
                     }
                 } else {
-                    // Si no hay polÃ­gono, usar cÃ­rculo
+                    
                     sectorLayer = createSectorCircle(sector, map);
                     allLayers.push(sectorLayer);
                 }
@@ -204,7 +204,7 @@ function initSectoresMap(yacimiento, sectores, hallazgos) {
                 const popupContent = `
                     <div style="min-width: 150px;">
                         <strong style="color: ${sector.color};">${sector.nombre}</strong><br>
-                        <span style="font-size: 0.9rem;">Ãrea: ${sector.area ? sector.area.toFixed(2) : 'N/A'} mÂ²</span><br>
+                        <span style="font-size: 0.9rem;">Área: ${sector.area ? sector.area.toFixed(2) : 'N/A'} m²</span><br>
                         <span style="font-size: 0.9rem;">Hallazgos: ${sector.hallazgos_count || 0}</span><br>
                         <a href="/sector/${sector.id}" style="color: #6366F1; text-decoration: none;">Ver detalles â†’</a>
                     </div>
