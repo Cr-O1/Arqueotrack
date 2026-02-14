@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
@@ -75,6 +75,11 @@ def create_app(config_name='development'):
 
     from app.blueprints.invitacion import invitacion_bp
     app.register_blueprint(invitacion_bp)
+
+    @app.route('/uploads/<path:filename>')
+    def uploaded_file(filename):
+        """Servir archivos subidos por los usuarios."""
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
     # Configurar manejo de errores
     @app.errorhandler(404)
