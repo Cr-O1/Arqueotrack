@@ -18,11 +18,30 @@ def portada():
 @login_required
 def inicio():
     """Dashboard principal"""
+    # Yacimientos propios
     yacimientos = Yacimiento.query.filter_by(user_id=current_user.id).all()
+    
+    # Yacimientos en colaboración
+    invitaciones = Invitacion.query.filter_by(invitado_id=current_user.id, estado='aceptada').all()
+    yacimientos_colaborando = [inv.yacimiento for inv in invitaciones]
+    
+    # Todos los yacimientos accesibles
+    todos_yacimientos = yacimientos + yacimientos_colaborando
+    
+    # Estadísticas globales
+    total_hallazgos = sum(y.total_hallazgos for y in todos_yacimientos)
+    yacimientos_activos = sum(1 for y in todos_yacimientos if not y.fecha_fin)
+    yacimientos_finalizados = sum(1 for y in todos_yacimientos if y.fecha_fin)
+    
     yacimientos_json = [y.to_dict(include_relations=True) for y in yacimientos]
+    
     return render_template(
         'inicio.html',
         yacimientos=yacimientos,
+        yacimientos_colaborando=yacimientos_colaborando,
+        total_hallazgos=total_hallazgos,
+        yacimientos_activos=yacimientos_activos,
+        yacimientos_finalizados=yacimientos_finalizados,
         yacimientos_json=yacimientos_json
     )
 
