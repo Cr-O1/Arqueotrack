@@ -97,7 +97,10 @@ class Yacimiento(db.Model):
     @property
     def total_hallazgos(self):
         """Retorna el total de hallazgos del yacimiento"""
-        return self.hallazgos.count()
+        try:
+            return self.hallazgos.count()
+        except Exception:
+            return 0
 
     @property
     def hallazgos_con_foto(self):

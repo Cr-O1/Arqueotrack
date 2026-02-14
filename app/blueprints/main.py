@@ -29,9 +29,9 @@ def inicio():
     todos_yacimientos = yacimientos + yacimientos_colaborando
     
     # Estadísticas globales
-    total_hallazgos = sum(y.total_hallazgos for y in todos_yacimientos)
-    yacimientos_activos = sum(1 for y in todos_yacimientos if not y.fecha_fin)
-    yacimientos_finalizados = sum(1 for y in todos_yacimientos if y.fecha_fin)
+    total_hallazgos = sum(y.total_hallazgos for y in todos_yacimientos) if todos_yacimientos else 0
+    yacimientos_activos = sum(1 for y in todos_yacimientos if not y.fecha_fin) if todos_yacimientos else 0
+    yacimientos_finalizados = sum(1 for y in todos_yacimientos if y.fecha_fin) if todos_yacimientos else 0
     
     yacimientos_json = [y.to_dict(include_relations=True) for y in yacimientos]
     

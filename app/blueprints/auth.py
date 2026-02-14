@@ -48,14 +48,18 @@ def iniciar_sesion():
 
     form = LoginForm()
     if form.validate_on_submit():
-        usuario = Usuario.query.filter_by(email=form.correo_electronico.data).first()
-        if usuario and usuario.check_password(form.contraseña.data):
-            login_user(usuario)
-            next_page = request.args.get('next')
-            if next_page and is_safe_url(next_page):
-                return redirect(next_page)
-            return redirect(url_for('main.inicio'))
-        flash('Credenciales inválidas', 'error')
+        try:
+            usuario = Usuario.query.filter_by(email=form.correo_electronico.data).first()
+            if usuario and usuario.check_password(form.contraseña.data):
+                login_user(usuario)
+                next_page = request.args.get('next')
+                if next_page and is_safe_url(next_page):
+                    return redirect(next_page)
+                return redirect(url_for('main.inicio'))
+            flash('Credenciales inválidas', 'error')
+        except Exception:
+            db.session.rollback()
+            flash('Error de base de datos', 'error')
     return render_template('iniciar_sesion.html', formulario=form)
 
 @auth_bp.route('/cerrar-sesion')
