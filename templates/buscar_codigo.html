@@ -81,7 +81,7 @@ document.getElementById('buscarForm').addEventListener('submit', async function(
                         ${data.hallazgo.yacimiento ? `<p style="margin: 0.5rem 0;"><strong>Yacimiento:</strong> ${data.hallazgo.yacimiento}</p>` : ''}
                         ${data.hallazgo.fecha ? `<p style="margin: 0.5rem 0;"><strong>Fecha:</strong> ${data.hallazgo.fecha}</p>` : ''}
                     </div>
-                    <a href="/hallazgo/${data.hallazgo.id}" class="btn" style="margin-top: 1rem; display: inline-block;">
+                    <a href="/hallazgo/${data.hallazgo.id}/detalle" class="btn" style="margin-top: 1rem; display: inline-block;">
                         Ver Detalles Completos →
                     </a>
                 </div>

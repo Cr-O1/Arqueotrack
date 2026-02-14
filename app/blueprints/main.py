@@ -77,6 +77,45 @@ def eliminar_cuenta():
         flash('Error al eliminar la cuenta. Por favor, contacta al administrador.', 'error')
         return redirect(url_for('main.perfil'))
 
+@main_bp.route('/api/buscar-hallazgo', methods=['POST'])
+@login_required
+def api_buscar_hallazgo():
+    """API para buscar hallazgo por código"""
+    data = request.get_json()
+    if not data or 'codigo' not in data:
+        return jsonify({'success': False, 'message': 'Código no proporcionado'}), 400
+    
+    codigo = data['codigo'].upper()
+    hallazgo = Hallazgo.query.filter_by(codigo_acceso=codigo).first()
+    
+    if hallazgo:
+        # Verificar acceso
+        es_propietario_yacimiento = hallazgo.yacimiento and hallazgo.yacimiento.user_id == current_user.id
+        tiene_invitacion = False
+        if hallazgo.yacimiento_id:
+            tiene_invitacion = Invitacion.query.filter_by(
+                yacimiento_id=hallazgo.yacimiento_id,
+                invitado_id=current_user.id,
+                estado='aceptada'
+            ).first() is not None
+
+        if hallazgo.user_id == current_user.id or es_propietario_yacimiento or tiene_invitacion:
+            return jsonify({
+                'success': True,
+                'hallazgo': {
+                    'id': hallazgo.id,
+                    'codigo': hallazgo.codigo_acceso,
+                    'tipo': hallazgo.tipo or 'No especificado',
+                    'descripcion': hallazgo.descripcion or '',
+                    'yacimiento': hallazgo.yacimiento.nombre if hallazgo.yacimiento else 'No asignado',
+                    'fecha': hallazgo.fecha.strftime('%d/%m/%Y') if hallazgo.fecha else 'No especificada'
+                }
+            })
+        else:
+            return jsonify({'success': False, 'message': 'No tienes acceso a este hallazgo'}), 403
+    
+    return jsonify({'success': False, 'message': 'Código no encontrado'}), 404
+
 @main_bp.route('/buscar_codigo', methods=['GET', 'POST'])
 @login_required
 def buscar_codigo():
