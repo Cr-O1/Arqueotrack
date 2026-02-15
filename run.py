@@ -25,22 +25,22 @@ def init_db():
     """Inicializar base de datos"""
     with app.app_context():
         db.create_all()
-        click.echo('✅ Base de datos inicializada')
+        click.echo('Base de datos inicializada')
 
 
 if __name__ == '__main__':
     # Auto-setup en Replit
     if os.getenv('REPL_ID'):  # Detectar si está en Replit
-        print('🔧 Configurando ArqueoTrack para Replit...')
+        print('Configurando ArqueoTrack...')
         setup_replit()
 
     # Obtener puerto
     port = int(os.getenv('PORT', 5000))
 
     print('=' * 60)
-    print('🏛️  ArqueoTrack - First Lego League 2026')
+    print('ArqueoTrack')
     print('=' * 60)
-    print(f'🌐 Servidor ejecutándose en puerto {port}')
+    print(f'Servidor ejecutándose en puerto {port}')
     print('=' * 60)
 
     # Ejecutar aplicación
