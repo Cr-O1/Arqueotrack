@@ -1,0 +1,171 @@
+# ============================================================
+#  ArqueoTrack — .gitignore
+# ============================================================
+
+# ------------------------------------------------------------
+# Python
+# ------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+
+# Distribución / empaquetado
+dist/
+build/
+*.egg-info/
+*.egg
+MANIFEST
+.eggs/
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+ENV/
+.env.bak
+
+# Pytest / Coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.coveragerc
+
+# mypy / pyright
+.mypy_cache/
+.pyright/
+.dmypy.json
+dmypy.json
+
+# ------------------------------------------------------------
+# Variables de entorno y secretos  ⚠️  NUNCA subir al repo
+# ------------------------------------------------------------
+.env
+.env.*
+!.env.example          # sí se sube la plantilla de ejemplo
+*.pem
+*.key
+secrets.json
+secrets.yaml
+
+# ------------------------------------------------------------
+# Base de datos
+# ------------------------------------------------------------
+*.db
+*.sqlite
+*.sqlite3
+instance/
+
+# ------------------------------------------------------------
+# Uploads de usuarios  (fotos, documentos, etc.)
+# ------------------------------------------------------------
+uploads/*
+!uploads/.gitkeep      # mantener la carpeta vacía rastreada
+
+# ------------------------------------------------------------
+# Logs
+# ------------------------------------------------------------
+*.log
+logs/
+log/
+
+# ------------------------------------------------------------
+# Flask / Werkzeug
+# ------------------------------------------------------------
+flask_session/
+
+# ------------------------------------------------------------
+# Migraciones generadas automáticamente (si usas Alembic)
+# Comenta estas líneas si quieres versionar las migraciones
+# ------------------------------------------------------------
+# migrations/versions/
+
+# ------------------------------------------------------------
+# Docker
+# ------------------------------------------------------------
+.docker/
+docker-compose.override.yml
+
+# ------------------------------------------------------------
+# Replit
+# ------------------------------------------------------------
+.replit
+replit.nix
+.cache/
+.config/
+.upm/
+.breakpoints
+
+# ------------------------------------------------------------
+# IDEs y editores
+# ------------------------------------------------------------
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains (PyCharm, etc.)
+.idea/
+*.iml
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim / Emacs
+*.swp
+*.swo
+*~
+\#*\#
+.\#*
+
+# ------------------------------------------------------------
+# Sistema operativo
+# ------------------------------------------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ------------------------------------------------------------
+# Archivos temporales y compilados
+# ------------------------------------------------------------
+*.tmp
+*.bak
+*.orig
+*.rej
+.sass-cache/
+node_modules/         # por si añades herramientas JS (npm/vite)
+package-lock.json
+yarn.lock
+
+# ------------------------------------------------------------
+# Reportes y exports generados en tiempo de ejecución
+# ------------------------------------------------------------
+exports/
+reports/
+*.pdf.generated
+
+# ------------------------------------------------------------
+# Terraform (para infraestructura en v9.0)
+# ------------------------------------------------------------
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+override.tf
+override.tf.json
