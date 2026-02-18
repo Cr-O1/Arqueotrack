@@ -1,6 +1,7 @@
 from datetime import datetime
 from flask import Blueprint, render_template, redirect, url_for, flash, request, abort
 from flask_login import login_required, current_user
+from sqlalchemy import func
 from app import db
 from app.models import Invitacion, Yacimiento, Usuario
 from app.forms import InvitacionForm
@@ -17,14 +18,18 @@ def invitar(yacimiento_id):
 
     form = InvitacionForm()
     if form.validate_on_submit():
-        email = form.email.data
-        usuario = Usuario.query.filter_by(email=email).first()
+        email = (form.email.data or '').strip().lower()
+        usuario = Usuario.query.filter(func.lower(Usuario.email) == email).first()
         if not usuario:
             flash('Usuario no encontrado.', 'error')
             return render_template('invitaciones/nueva.html', formulario=form, yacimiento=yacimiento)
 
-        if Invitacion.query.filter_by(yacimiento_id=yacimiento_id, invitado_id=usuario.id).first():
-            flash('Ya existe una invitación para este usuario.', 'error')
+        if Invitacion.query.filter_by(
+            yacimiento_id=yacimiento_id,
+            invitado_id=usuario.id,
+            estado='pendiente'
+        ).first():
+            flash('Ya existe una invitación pendiente para este usuario.', 'error')
             return render_template('invitaciones/nueva.html', formulario=form, yacimiento=yacimiento)
 
         try:
@@ -69,7 +74,20 @@ def gestionar(yacimiento_id):
 @login_required
 def mis_invitaciones():
     """Mis invitaciones pendientes"""
-    invitaciones = Invitacion.query.filter_by(invitado_id=current_user.id, estado='pendiente').all()
+    email_actual = (current_user.email or '').strip().lower()
+    invitaciones = Invitacion.query.filter(
+        Invitacion.estado == 'pendiente',
+        (Invitacion.invitado_id == current_user.id) |
+        (func.lower(Invitacion.email) == email_actual)
+    ).all()
+
+    for invitacion in invitaciones:
+        if invitacion.invitado_id != current_user.id:
+            invitacion.invitado_id = current_user.id
+
+    if db.session.dirty:
+        db.session.commit()
+
     return render_template('invitaciones/mis_invitaciones.html', invitaciones=invitaciones)
 
 @invitacion_bp.route('/aceptar_invitacion/<int:invitacion_id>', methods=['POST'])
