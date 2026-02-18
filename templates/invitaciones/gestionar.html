@@ -57,7 +57,7 @@
 
                         {% if invitacion.estado == 'pendiente' %}
                         <form method="POST" action="/revocar_invitacion/{{ invitacion.id }}" style="display: inline;" onsubmit="return confirm('¿Cancelar esta invitación?');">
-                            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                             <button type="submit" class="btn btn-danger" style="padding: 0.5rem 1rem;">
                                 Cancelar Invitación
                             </button>
