@@ -51,6 +51,13 @@
   box-sizing: border-box;
 }
 
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
 body {
   font-family: 'Georgia', 'Palatino', 'Times New Roman', serif;
   background: var(--bg-color);
@@ -486,6 +493,7 @@ nav {
   .btn {
       display: inline-block;
       padding: 0.75rem 1.5rem;
+      font-family: inherit;
       background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
       color: var(--white);
       text-decoration: none;
