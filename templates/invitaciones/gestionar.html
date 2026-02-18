@@ -36,7 +36,7 @@
             </div>
 
             <div style="margin-top: 2rem;">
-                {% for invitacion in invitaciones|sort(attribute='fecha_invitacion', reverse=True) %}
+                {% for invitacion in invitaciones|sort(attribute='fecha_envio', reverse=True) %}
                 <div class="card" style="margin-bottom: 1rem; border-left: 4px solid 
                     {% if invitacion.estado == 'aceptada' %}var(--success-color)
                     {% elif invitacion.estado == 'rechazada' %}var(--danger-color)
@@ -67,7 +67,7 @@
 
                     <div class="detail-grid" style="margin-top: 1rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; font-size: var(--font-sm); color: var(--gray);">
                         <div><strong>Invitado por:</strong> {{ invitacion.invitado_por.nombre_usuario }}</div>
-                        <div><strong>Fecha invitación:</strong> {{ invitacion.fecha_invitacion.strftime('%d/%m/%Y %H:%M') }}</div>
+                        <div><strong>Fecha invitación:</strong> {{ invitacion.fecha_envio.strftime('%d/%m/%Y %H:%M') }}</div>
                         {% if invitacion.fecha_respuesta %}
                         <div><strong>Fecha respuesta:</strong> {{ invitacion.fecha_respuesta.strftime('%d/%m/%Y %H:%M') }}</div>
                         {% endif %}
