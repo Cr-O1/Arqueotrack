@@ -2,7 +2,7 @@ import os
 from datetime import timedelta
 
 class Config:
-    SECRET_KEY = os.getenv('SECRET_KEY', 'dev-secret-key-replit-fll-2026')
+    SECRET_KEY = os.getenv('SECRET_KEY')
 
     # SQLite para Replit
     SQLALCHEMY_DATABASE_URI = 'sqlite:///arqueotrack.db'
